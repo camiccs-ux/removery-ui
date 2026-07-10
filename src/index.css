@@ -15,124 +15,128 @@
 :root {
   --radius: 0.625rem;
 
-  --background: #FFFFFF;
-  --foreground: #2E1D11;
+  /* Tipografia — confirmado via Figma (get_design_context) em node
+     24263:698 (body/text-base/semibold) e 25438:265 (display/xs).
+     Archivo é carregável via Google Fonts. ABC Social Extended é fonte
+     licenciada (ABC Dinamo) — precisa dos arquivos de fonte self-hosted
+     antes de renderizar corretamente; até lá cai no fallback. */
+  --font-body-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display-family: "ABC Social Extended", "Archivo", ui-sans-serif, system-ui, sans-serif;
 
-  --card: #FFFFFF;
-  --card-foreground: #180C04;
+  --background: oklch(0.99 0.005 90);
+  --foreground: oklch(0.18 0.01 250);
 
-  --popover: #FFFFFF;
-  --popover-foreground: #180C04;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.01 250);
 
-  --primary: #009DA3;
-  --primary-foreground: #FFFFFF;
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.01 250);
 
-  --secondary: #1F2937;
-  --secondary-foreground: #FFFFFF;
+  --primary: oklch(0.5 0.08 195);
+  --primary-foreground: oklch(0.99 0 0);
 
-  --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
+  --secondary: oklch(0.96 0.01 195);
+  --secondary-foreground: oklch(0.25 0.02 195);
+
+  --muted: oklch(0.96 0.005 90);
+  --muted-foreground: oklch(0.5 0.01 250);
 
   --accent: oklch(0.94 0.03 195);
-  --accent-foreground: #002729;
+  --accent-foreground: oklch(0.25 0.05 195);
 
-  --destructive: #991B1B;
-  --destructive-foreground: #FFFFFF
+  --destructive: oklch(0.58 0.22 27);
 
-  --border: #EAE7DC;
-  --input: #EAE7DC;
-  --ring: #009DA3;
+  --border: oklch(0.9 0.005 90);
+  --input: oklch(0.9 0.005 90);
+  --ring: oklch(0.5 0.08 195);
 
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #009DA3;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #111827;
-  --sidebar-accent-foreground: #F9FAFB;
-  --sidebar-border: #EAE7DC;
-  --sidebar-ring: #009DA3;
+  --sidebar: oklch(0.14 0.02 195);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.5 0.08 195);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.22 0.03 195);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.22 0.02 195);
+  --sidebar-ring: oklch(0.5 0.08 195);
 
-  --chart-1: #EF4444;
-  --chart-2: #006E74;
-  --chart-3: #1E3A8A;
-  --chart-4: #FBBF24;
-  --chart-5: #D97706;
+  --chart-1: oklch(0.6 0.15 195);
+  --chart-2: oklch(0.65 0.15 40);
+  --chart-3: oklch(0.6 0.15 300);
+  --chart-4: oklch(0.7 0.15 140);
+  --chart-5: oklch(0.65 0.18 20);
 
   /* Status semantics — Schedule (calendar/appointment) */
-  --status-new: #F98140;
-  --status-new-bg: #FFF4EF;
-  --status-pending: #F43F5E;
-  --status-pending-bg: #FFF1F2;
-  --status-confirmed: #84CC16;
-  --status-confirmed-bg: #F7FEE7;
-  --status-checked-in: #EAB308;
-  --status-checked-in-bg: #FEFCE8;
-  --status-in-service: #A855F7;
-  --status-in-service-bg: #FAF5FF;
-  --status-noshow: #887C77;
-  --status-noshow-bg: #FCFAF3;
-  --status-blocked: #64748B;
-  --status-blocked-bg: #F1F5F9;
+  --status-new: oklch(0.68 0.14 55);
+  --status-new-bg: oklch(0.93 0.05 55);
+  --status-pending: oklch(0.6 0.18 20);
+  --status-pending-bg: oklch(0.92 0.06 20);
+  --status-confirmed: oklch(0.6 0.12 145);
+  --status-confirmed-bg: oklch(0.93 0.05 145);
+  --status-checked-in: oklch(0.75 0.13 85);
+  --status-checked-in-bg: oklch(0.94 0.06 85);
+  --status-in-service: oklch(0.6 0.1 290);
+  --status-in-service-bg: oklch(0.93 0.04 290);
+  --status-noshow: oklch(0.65 0.01 250);
+  --status-noshow-bg: oklch(0.93 0.005 250);
+  --status-blocked: oklch(0.75 0.005 250);
 }
 
 .dark {
-  --background: #2E1D11;
-  --foreground: #F9F5F2;
+  --background: oklch(0.16 0.01 250);
+  --foreground: oklch(0.96 0 0);
 
-  --card: #180C04;
-  --card-foreground: #F9F5F2;
+  --card: oklch(0.2 0.01 250);
+  --card-foreground: oklch(0.96 0 0);
 
-  --popover: #180C04;
-  --popover-foreground: #F9F5F2;
+  --popover: oklch(0.2 0.01 250);
+  --popover-foreground: oklch(0.96 0 0);
 
-  --primary: #009DA3;
-  --primary-foreground: #FFFFFF;
+  --primary: oklch(0.68 0.1 195);
+  --primary-foreground: oklch(0.14 0.02 195);
 
-  --secondary: #F3F4F6;
-  --secondary-foreground: #1F2937;
+  --secondary: oklch(0.26 0.02 195);
+  --secondary-foreground: oklch(0.9 0 0);
 
-  --muted: #374151;
-  --muted-foreground: #F3F4F6;
+  --muted: oklch(0.24 0.01 250);
+  --muted-foreground: oklch(0.65 0.01 250);
 
-  --accent: #002729;
-  --accent-foreground: #FFFFFF;
+  --accent: oklch(0.28 0.04 195);
+  --accent-foreground: oklch(0.9 0 0);
 
-  --destructive: #B91C1C;
-  --destructive-foreground: #FEF2F2
+  --destructive: oklch(0.6 0.2 27);
 
-  --border: #413530;
-  --input: #5F524D;
-  --ring: #009DA3;
+  --border: oklch(0.3 0.01 250);
+  --input: oklch(0.3 0.01 250);
+  --ring: oklch(0.68 0.1 195);
 
-  --sidebar: #111827;
-  --sidebar-foreground: #FFFFFF;
-  --sidebar-primary: #006E74;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #192132;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #FFFFFF;
-  --sidebar-ring: #006E74;
+  --sidebar: oklch(0.1 0.01 250);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.68 0.1 195);
+  --sidebar-primary-foreground: oklch(0.14 0.02 195);
+  --sidebar-accent: oklch(0.2 0.02 195);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.28 0.01 250);
+  --sidebar-ring: oklch(0.68 0.1 195);
 
-  --chart-1: #EF4444;
-  --chart-2: #006E74;
-  --chart-3: #1E3A8A;
-  --chart-4: #FBBF24;
-  --chart-5: #D97706;
+  --chart-1: oklch(0.65 0.15 195);
+  --chart-2: oklch(0.68 0.15 40);
+  --chart-3: oklch(0.65 0.15 300);
+  --chart-4: oklch(0.72 0.15 140);
+  --chart-5: oklch(0.68 0.18 20);
 
-  --status-new: #F98140;
-  --status-new-bg: #A03600;
-  --status-pending: #E11D48;
-  --status-pending-bg: #9F1239;
-  --status-confirmed: #84CC16;
-  --status-confirmed-bg: #4D7C0F;
-  --status-checked-in: #FACC15;
-  --status-checked-in-bg: #713F12;
-  --status-in-service: #9333EA;
-  --status-in-service-bg: #6B21A8;
-  --status-noshow: #B2AAA2;
-  --status-noshow-bg: #5F524D;
-  --status-blocked: #94A3B8;
-  --status-blocked-bg: #475569
+  --status-new: oklch(0.72 0.14 55);
+  --status-new-bg: oklch(0.3 0.05 55);
+  --status-pending: oklch(0.68 0.18 20);
+  --status-pending-bg: oklch(0.3 0.06 20);
+  --status-confirmed: oklch(0.68 0.12 145);
+  --status-confirmed-bg: oklch(0.28 0.05 145);
+  --status-checked-in: oklch(0.78 0.13 85);
+  --status-checked-in-bg: oklch(0.3 0.06 85);
+  --status-in-service: oklch(0.68 0.1 290);
+  --status-in-service-bg: oklch(0.28 0.04 290);
+  --status-noshow: oklch(0.55 0.01 250);
+  --status-noshow-bg: oklch(0.26 0.005 250);
+  --status-blocked: oklch(0.4 0.005 250);
 }
 
 @theme inline {
@@ -188,6 +192,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --font-body: var(--font-body-family);
+  --font-display: var(--font-display-family);
 }
 
 @layer base {
@@ -195,7 +202,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: "Inter", system-ui, sans-serif;
+    @apply bg-background text-foreground font-body;
   }
 }

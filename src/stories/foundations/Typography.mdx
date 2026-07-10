@@ -2,21 +2,89 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 <Meta title="Foundations/Typography" />
 
-# Typography
+export const tableStyle = { width: '100%', borderCollapse: 'collapse', fontSize: 14, marginBottom: 24 }
+export const thStyle = { textAlign: 'left', padding: '10px 12px', borderBottom: '1px solid var(--border)', background: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }
+export const tdStyle = { padding: '10px 12px', borderBottom: '1px solid var(--border)', verticalAlign: 'middle' }
 
-export const Sample = ({ label, className, style }) => (
-  <div style={{ marginBottom: 20, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
-    <div style={{ fontSize: 12, color: 'var(--muted-foreground)', marginBottom: 4 }}>{label}</div>
-    <div className={className} style={style}>Removery UI — agendamento sem fricção</div>
-  </div>
+export const SpecTable = ({ rows }) => (
+  <table style={tableStyle}>
+    <thead>
+      <tr>
+        <th style={thStyle}>Token</th>
+        <th style={thStyle}>Família</th>
+        <th style={thStyle}>Tamanho</th>
+        <th style={thStyle}>Peso</th>
+        <th style={thStyle}>Line-height</th>
+        <th style={thStyle}>Amostra</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>
+          <td style={{ ...tdStyle, fontFamily: 'monospace' }}>{r.token}</td>
+          <td style={tdStyle}>{r.family}</td>
+          <td style={tdStyle}>{r.size}</td>
+          <td style={tdStyle}>{r.weight}</td>
+          <td style={tdStyle}>{r.lineHeight}</td>
+          <td style={{ ...tdStyle, fontFamily: r.fontFamilyCss, fontWeight: r.fontWeightCss, fontSize: r.fontSizeCss, lineHeight: r.lineHeightCss }}>
+            Removery UI
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 )
 
-<Sample label="text-3xl / font-semibold" style={{ fontSize: 30, fontWeight: 600 }} />
-<Sample label="text-2xl / font-semibold" style={{ fontSize: 24, fontWeight: 600 }} />
-<Sample label="text-xl / font-medium" style={{ fontSize: 20, fontWeight: 500 }} />
-<Sample label="text-lg / font-medium" style={{ fontSize: 18, fontWeight: 500 }} />
-<Sample label="text-base / font-normal (corpo de texto)" style={{ fontSize: 16, fontWeight: 400 }} />
-<Sample label="text-sm / font-normal (padrão de UI — inputs, labels)" style={{ fontSize: 14, fontWeight: 400 }} />
-<Sample label="text-xs / font-medium (badges, legendas)" style={{ fontSize: 12, fontWeight: 500 }} />
+# Typography
 
-**Fonte:** Inter (system-ui como fallback) — definida em `src/index.css`. Ajustar aqui se a Removery usar uma fonte de marca diferente.
+Valores confirmados diretamente no arquivo Figma da Removery Library via `get_design_context`, não aproximados — ao contrário das cores (ainda pendentes de sincronização), os tokens abaixo já foram lidos do Figma real.
+
+## Famílias de fonte
+
+A Removery Library define 5 variáveis de família (`font/body-text`, `font/display-text`, `font/mono-text`, `font/serif-text`, `font/caveat-text`) na collection `🌗 Theme Mode`. Hoje, só as duas primeiras estão em uso — `mono-text`, `serif-text` e `caveat-text` existem na biblioteca mas não são aplicadas em nenhum lugar do R7 ou do funil público.
+
+<SpecTable
+  rows={[
+    { token: 'font/body-text', family: 'Archivo', size: '—', weight: '—', lineHeight: '—', fontFamilyCss: 'Archivo, sans-serif' },
+    { token: 'font/display-text', family: 'ABC Social Extended', size: '—', weight: '—', lineHeight: '—', fontFamilyCss: '"ABC Social Extended", Archivo, sans-serif' },
+  ]}
+/>
+
+`ABC Social Extended` é fonte licenciada (ABC Dinamo) — os arquivos precisam ser adicionados ao projeto (self-hosted, `@font-face`) antes de renderizar corretamente. Até lá, cai no fallback `Archivo`.
+
+## Estilos confirmados
+
+Estes dois estilos foram lidos diretamente de camadas de texto no Figma (não são estimativas):
+
+<SpecTable
+  rows={[
+    {
+      token: 'body/text-base/semibold',
+      family: 'Archivo (SemiBold)',
+      size: '16px (font-size/text-base)',
+      weight: '600 (font-weight/font-semibold)',
+      lineHeight: '24px (line-height/leading-6)',
+      fontFamilyCss: 'Archivo, sans-serif',
+      fontWeightCss: 600,
+      fontSizeCss: 16,
+      lineHeightCss: '24px',
+    },
+    {
+      token: 'display/xs',
+      family: 'ABC Social Extended (Bold)',
+      size: '16px (font-size/text-base)',
+      weight: '700 (font-weight/font-bold)',
+      lineHeight: '24px (line-height/leading-6)',
+      fontFamilyCss: '"ABC Social Extended", Archivo, sans-serif',
+      fontWeightCss: 700,
+      fontSizeCss: 16,
+      lineHeightCss: '24px',
+    },
+  ]}
+/>
+
+## Escala pendente de confirmação
+
+A biblioteca tem mais 6 degraus de `display` (`sm`, `md`, `lg`, `xl`, `2xl`, `3xl`) e a escala completa de `body` (`text-xs`, `text-sm`, `text-lg`, `text-xl`, cada um em `normal`/`semibold`/`bold`) — só não puxamos o px/line-height de cada um ainda porque isso exige abrir uma camada de texto por estilo no Figma (não tem como buscar em lote). Os nomes dos tokens (`font-size/text-*`, `line-height/leading-*`, `font-weight/font-*`) seguem exatamente a nomenclatura padrão do Tailwind, então é bem provável que os valores batam com a escala default do Tailwind — mas isso não está confirmado e não deve ser assumido como verdade até checarmos camada por camada.
+
+Se quiser fechar a escala completa, me manda o link de mais alguma camada de texto (Copy link to selection, com o estilo `display/lg` ou `body/text-xs/normal`, por exemplo) e eu vou completando essa tabela aos poucos.
