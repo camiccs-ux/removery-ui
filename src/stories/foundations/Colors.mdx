@@ -1,0 +1,67 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Tokens da collection `🌗 Theme Mode` da Removery Library. Os nomes das variáveis batem com o Figma; os valores abaixo são aproximações visuais até a sincronização oficial.
+
+export const Swatch = ({ name, varName }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+    <div
+      style={{
+        width: 48,
+        height: 48,
+        borderRadius: 8,
+        border: '1px solid var(--border)',
+        background: `var(${varName})`,
+      }}
+    />
+    <div>
+      <div style={{ fontWeight: 600, fontSize: 14 }}>{name}</div>
+      <code style={{ fontSize: 12, color: 'var(--muted-foreground)' }}>{varName}</code>
+    </div>
+  </div>
+)
+
+## Base
+
+<Swatch name="Primary" varName="--primary" />
+<Swatch name="Secondary" varName="--secondary" />
+<Swatch name="Accent (também usado no hover — convenção Tailwind/shadcn)" varName="--accent" />
+<Swatch name="Muted" varName="--muted" />
+<Swatch name="Destructive" varName="--destructive" />
+<Swatch name="Card" varName="--card" />
+<Swatch name="Popover" varName="--popover" />
+<Swatch name="Border" varName="--border" />
+<Swatch name="Input" varName="--input" />
+<Swatch name="Ring" varName="--ring" />
+
+## Sidebar
+
+<Swatch name="Sidebar" varName="--sidebar" />
+<Swatch name="Sidebar Accent" varName="--sidebar-accent" />
+
+## Charts
+
+<Swatch name="Chart 1" varName="--chart-1" />
+<Swatch name="Chart 2" varName="--chart-2" />
+<Swatch name="Chart 3" varName="--chart-3" />
+<Swatch name="Chart 4" varName="--chart-4" />
+<Swatch name="Chart 5" varName="--chart-5" />
+
+## Status (Scheduling / Calendário)
+
+Tokens semânticos criados durante o trabalho de auditoria — cada um representa um status de agendamento no R7, não uma cor arbitrária. Ver seção 5–7 do relatório de auditoria.
+
+<Swatch name="New" varName="--status-new" />
+<Swatch name="Pending" varName="--status-pending" />
+<Swatch name="Confirmed" varName="--status-confirmed" />
+<Swatch name="Checked-in" varName="--status-checked-in" />
+<Swatch name="In service" varName="--status-in-service" />
+<Swatch name="No-show" varName="--status-noshow" />
+<Swatch name="Blocked" varName="--status-blocked" />
+
+## Sobre o hover
+
+Não existe uma variável `--hover` separada — a convenção do Tailwind/shadcn reaproveita `--accent` para estados de hover (`hover:bg-accent`). O ponto de atenção real (ver plano de ação da auditoria) é confirmar que o valor de `--accent` aqui bate com o hover usado hoje em produção no R7.

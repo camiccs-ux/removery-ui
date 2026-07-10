@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Introduction" />
+
+# Removery UI
+
+Biblioteca de componentes React, tokens de design e padrões de uso, espelhando a **Removery Library** no Figma — construída a partir da auditoria do design system.
+
+## O que tem aqui
+
+### Foundations
+
+Decisões que servem de base para todos os componentes:
+
+- **Colors** — paleta da collection `🌗 Theme Mode`, incluindo os tokens semânticos de status (`status-new`, `status-pending`, `status-confirmed`, `status-checked-in`, `status-in-service`, `status-noshow`, `status-blocked`)
+- **Typography** — escala e pesos de fonte
+- **Dark Mode** — sistema de variáveis CSS e como ativar
+- **Accessibility** — contraste, foco, navegação por teclado
+
+### Components
+
+Componentes confirmados na auditoria da Removery Library, organizados por função:
+
+| Categoria | Componentes |
+|---|---|
+| **Actions** | Button |
+| **Data Entry** | Input, Label, Textarea, Checkbox, Radio Group, Switch, Select |
+| **Data Display** | Card, Badge, Avatar, Progress, Skeleton |
+| **Feedback** | Alert, Dialog, Sheet, Tooltip, Popover |
+| **Navigation** | Tabs |
+
+## Sobre este catálogo
+
+Este não é ainda um espelho 1:1 completo da Removery Library — é o ponto de partida com os componentes já confirmados e mapeados na auditoria (ver documento *Auditoria — Removery Library vs. Uso no R7*). A lista real da lib é maior (Calendar, Data Table, Drawer, Dropdown Menu, Command, Avatar Group, Menubar, Navigation Menu, Hover Card, Context Menu, Accordion, Breadcrumb, Pagination, Sidebar e outros) — cada um pode ser adicionado seguindo o mesmo padrão usado aqui.
+
+**Como adicionar um componente novo:**
+1. Confirme o componente e as variantes no Figma (via MCP ou visualmente).
+2. Crie o arquivo em `src/components/ui/<nome>.tsx`, seguindo a convenção shadcn/ui (Radix + `class-variance-authority` + `cn()`).
+3. Crie a story em `src/stories/components/<categoria>/<Nome>.stories.tsx` com `tags: ['autodocs']`.
+4. Rode `npm run storybook` para conferir.
+
+**Valores de cor:** os tokens em `src/index.css` usam os **nomes reais** das variáveis do Figma, mas os valores hexadecimais são aproximações visuais — ver nota no topo do arquivo. Sincronizar com os valores exatos antes de publicar para o time.

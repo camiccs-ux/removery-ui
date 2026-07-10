@@ -1,0 +1,22 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+export const Sample = ({ label, className, style }) => (
+  <div style={{ marginBottom: 20, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
+    <div style={{ fontSize: 12, color: 'var(--muted-foreground)', marginBottom: 4 }}>{label}</div>
+    <div className={className} style={style}>Removery UI — agendamento sem fricção</div>
+  </div>
+)
+
+<Sample label="text-3xl / font-semibold" style={{ fontSize: 30, fontWeight: 600 }} />
+<Sample label="text-2xl / font-semibold" style={{ fontSize: 24, fontWeight: 600 }} />
+<Sample label="text-xl / font-medium" style={{ fontSize: 20, fontWeight: 500 }} />
+<Sample label="text-lg / font-medium" style={{ fontSize: 18, fontWeight: 500 }} />
+<Sample label="text-base / font-normal (corpo de texto)" style={{ fontSize: 16, fontWeight: 400 }} />
+<Sample label="text-sm / font-normal (padrão de UI — inputs, labels)" style={{ fontSize: 14, fontWeight: 400 }} />
+<Sample label="text-xs / font-medium (badges, legendas)" style={{ fontSize: 12, fontWeight: 500 }} />
+
+**Fonte:** Inter (system-ui como fallback) — definida em `src/index.css`. Ajustar aqui se a Removery usar uma fonte de marca diferente.
