@@ -2,66 +2,144 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 <Meta title="Foundations/Colors" />
 
+export const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse',
+  fontSize: 14,
+  marginBottom: 32,
+}
+export const thStyle = {
+  textAlign: 'left',
+  padding: '10px 12px',
+  borderBottom: '1px solid var(--border)',
+  background: 'var(--muted)',
+  fontWeight: 600,
+  whiteSpace: 'nowrap',
+}
+export const tdStyle = {
+  padding: '10px 12px',
+  borderBottom: '1px solid var(--border)',
+  verticalAlign: 'middle',
+}
+export const codeStyle = {
+  fontSize: 12.5,
+  background: 'var(--muted)',
+  border: '1px solid var(--border)',
+  borderRadius: 4,
+  padding: '1px 6px',
+}
+
+export const Swatch = ({ hex, varName }) => (
+  <div
+    style={{
+      width: 36,
+      height: 36,
+      borderRadius: 8,
+      border: '1px solid var(--border)',
+      background: varName ? `var(${varName})` : hex,
+    }}
+  />
+)
+
+export const ColorTable = ({ columns, rows }) => (
+  <table style={tableStyle}>
+    <thead>
+      <tr>
+        {columns.map((c) => (
+          <th key={c} style={thStyle}>{c}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>
+          <td style={tdStyle}>{r.token}</td>
+          <td style={tdStyle}>
+            <Swatch hex={r.hex} varName={r.varName} />
+          </td>
+          <td style={{ ...tdStyle, fontFamily: 'monospace' }}>{r.hex}</td>
+          {r.contrast !== undefined && <td style={tdStyle}>{r.contrast}</td>}
+          <td style={tdStyle}>{r.usage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+
 # Colors
 
-Tokens da collection `🌗 Theme Mode` da Removery Library. Os nomes das variáveis batem com o Figma; os valores abaixo são aproximações visuais até a sincronização oficial.
-
-export const Swatch = ({ name, varName }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-    <div
-      style={{
-        width: 48,
-        height: 48,
-        borderRadius: 8,
-        border: '1px solid var(--border)',
-        background: `var(${varName})`,
-      }}
-    />
-    <div>
-      <div style={{ fontWeight: 600, fontSize: 14 }}>{name}</div>
-      <code style={{ fontSize: 12, color: 'var(--muted-foreground)' }}>{varName}</code>
-    </div>
-  </div>
-)
+Tokens da collection `🌗 Theme Mode` da Removery Library. Os **nomes** das variáveis batem com o Figma; os **valores hex** abaixo são aproximações visuais (documentadas no topo de `index.css`) até a sincronização oficial com a collection publicada. Os contrastes marcados como reprovados nas seções abaixo são um artefato dessa aproximação — recalcular depois da sincronização.
 
 ## Base
 
-<Swatch name="Primary" varName="--primary" />
-<Swatch name="Secondary" varName="--secondary" />
-<Swatch name="Accent (também usado no hover — convenção Tailwind/shadcn)" varName="--accent" />
-<Swatch name="Muted" varName="--muted" />
-<Swatch name="Destructive" varName="--destructive" />
-<Swatch name="Card" varName="--card" />
-<Swatch name="Popover" varName="--popover" />
-<Swatch name="Border" varName="--border" />
-<Swatch name="Input" varName="--input" />
-<Swatch name="Ring" varName="--ring" />
+<ColorTable
+  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  rows={[
+    { token: 'background', varName: '--background', hex: '#fdfcf8', usage: 'Fundo de página' },
+    { token: 'foreground', varName: '--foreground', hex: '#0e1216', usage: 'Texto principal (18.32:1 sobre background — AAA)' },
+    { token: 'card', varName: '--card', hex: '#ffffff', usage: 'Fundo de cards e superfícies elevadas' },
+    { token: 'card-foreground', varName: '--card-foreground', hex: '#0e1216', usage: 'Texto sobre card' },
+    { token: 'popover', varName: '--popover', hex: '#ffffff', usage: 'Fundo de popover, dropdown, tooltip' },
+    { token: 'primary', varName: '--primary', hex: '#157171', usage: 'Ações principais, links, foco (5.63:1 sobre background — AA)' },
+    { token: 'primary-foreground', varName: '--primary-foreground', hex: '#fcfcfc', usage: 'Texto sobre primary (5.64:1 — AA)' },
+    { token: 'secondary', varName: '--secondary', hex: '#ebf4f4', usage: 'Superfície secundária' },
+    { token: 'secondary-foreground', varName: '--secondary-foreground', hex: '#162525', usage: 'Texto sobre secondary (14.17:1 — AAA)' },
+    { token: 'muted', varName: '--muted', hex: '#f3f2ee', usage: 'Superfícies neutras, fundos de tabela' },
+    { token: 'muted-foreground', varName: '--muted-foreground', hex: '#5f6469', usage: 'Texto secundário (5.82:1 sobre background — AA)' },
+    { token: 'accent', varName: '--accent', hex: '#d5f2f1', usage: 'Destaques leves — reaproveitado também para hover (ver nota abaixo)' },
+    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002929', usage: 'Texto sobre accent (13.19:1 — AAA)' },
+    { token: 'destructive', varName: '--destructive', hex: '#df2225', usage: 'Ações destrutivas, erros (4.66:1 sobre background — AA)' },
+    { token: 'border / input', varName: '--border', hex: '#dfdeda', usage: 'Bordas, divisores, contorno de inputs' },
+    { token: 'ring', varName: '--ring', hex: '#157171', usage: 'Anel de foco (mesmo valor de primary)' },
+  ]}
+/>
 
 ## Sidebar
 
-<Swatch name="Sidebar" varName="--sidebar" />
-<Swatch name="Sidebar Accent" varName="--sidebar-accent" />
+<ColorTable
+  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  rows={[
+    { token: 'sidebar', varName: '--sidebar', hex: '#010c0c', usage: 'Fundo do sidebar (sempre escuro, independente do tema)' },
+    { token: 'sidebar-foreground', varName: '--sidebar-foreground', hex: '#eeeeee', usage: 'Texto sobre sidebar' },
+    { token: 'sidebar-primary', varName: '--sidebar-primary', hex: '#157171', usage: 'Item ativo / ênfase dentro do sidebar' },
+    { token: 'sidebar-accent', varName: '--sidebar-accent', hex: '#071f1f', usage: 'Hover / estado selecionado de item de menu' },
+    { token: 'sidebar-border', varName: '--sidebar-border', hex: '#0f1e1d', usage: 'Divisores internos do sidebar' },
+    { token: 'sidebar-ring', varName: '--sidebar-ring', hex: '#157171', usage: 'Anel de foco dentro do sidebar' },
+  ]}
+/>
+
+## Status (Scheduling / R7)
+
+Tokens semânticos de status de agendamento, criados na auditoria do design system (ver relatório, seções 5–7) — cada um representa um estado do R7, não uma cor arbitrária. A coluna de contraste compara o texto (`status-*`) contra o próprio fundo (`status-*-bg`), como usado no componente `Badge`.
+
+<ColorTable
+  columns={['Token', 'Swatch', 'Hex (texto)', 'Contraste vs bg', 'Usage']}
+  rows={[
+    { token: 'status-new', varName: '--status-new', hex: '#d97e38', contrast: '2.40:1 ⚠️ abaixo de AA', usage: 'Agendamento recém-criado' },
+    { token: 'status-pending', varName: '--status-pending', hex: '#d64651', contrast: '3.24:1 (AA large text)', usage: 'Aguardando confirmação' },
+    { token: 'status-confirmed', varName: '--status-confirmed', hex: '#4d9351', contrast: '3.09:1 (AA large text)', usage: 'Confirmado pelo cliente' },
+    { token: 'status-checked-in', varName: '--status-checked-in', hex: '#d4a73e', contrast: '1.87:1 ⚠️ abaixo de AA', usage: 'Cliente chegou ao estúdio' },
+    { token: 'status-in-service', varName: '--status-in-service', hex: '#7f75b8', contrast: '3.30:1 (AA large text)', usage: 'Sessão em andamento' },
+    { token: 'status-noshow', varName: '--status-noshow', hex: '#8b9095', contrast: '2.62:1 ⚠️ abaixo de AA', usage: 'Cliente não compareceu' },
+    { token: 'status-blocked', varName: '--status-blocked', hex: '#acaeb1', contrast: '2.17:1 vs background ⚠️ abaixo de AA', usage: 'Horário bloqueado (borda tracejada, sem bg preenchido)' },
+  ]}
+/>
+
+Os itens marcados com ⚠️ ficam abaixo de 3:1 com os valores placeholder atuais e precisam de ajuste de luminosidade assim que os valores reais da collection `🌗 Theme Mode` forem confirmados no Figma — isso está registrado no plano de ação da auditoria como pendente de tokens de Badge (PKG, GUAR, ONLINE, ALERT, $) e agora se estende também às cores de status.
 
 ## Charts
 
-<Swatch name="Chart 1" varName="--chart-1" />
-<Swatch name="Chart 2" varName="--chart-2" />
-<Swatch name="Chart 3" varName="--chart-3" />
-<Swatch name="Chart 4" varName="--chart-4" />
-<Swatch name="Chart 5" varName="--chart-5" />
-
-## Status (Scheduling / Calendário)
-
-Tokens semânticos criados durante o trabalho de auditoria — cada um representa um status de agendamento no R7, não uma cor arbitrária. Ver seção 5–7 do relatório de auditoria.
-
-<Swatch name="New" varName="--status-new" />
-<Swatch name="Pending" varName="--status-pending" />
-<Swatch name="Confirmed" varName="--status-confirmed" />
-<Swatch name="Checked-in" varName="--status-checked-in" />
-<Swatch name="In service" varName="--status-in-service" />
-<Swatch name="No-show" varName="--status-noshow" />
-<Swatch name="Blocked" varName="--status-blocked" />
+<ColorTable
+  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  rows={[
+    { token: 'chart-1', varName: '--chart-1', hex: '#009a9c', usage: 'Série 1 em gráficos' },
+    { token: 'chart-2', varName: '--chart-2', hex: '#d96a42', usage: 'Série 2 em gráficos' },
+    { token: 'chart-3', varName: '--chart-3', hex: '#8f68cb', usage: 'Série 3 em gráficos' },
+    { token: 'chart-4', varName: '--chart-4', hex: '#68b457', usage: 'Série 4 em gráficos' },
+    { token: 'chart-5', varName: '--chart-5', hex: '#e85760', usage: 'Série 5 em gráficos' },
+  ]}
+/>
 
 ## Sobre o hover
 
-Não existe uma variável `--hover` separada — a convenção do Tailwind/shadcn reaproveita `--accent` para estados de hover (`hover:bg-accent`). O ponto de atenção real (ver plano de ação da auditoria) é confirmar que o valor de `--accent` aqui bate com o hover usado hoje em produção no R7.
+Não existe uma variável `--hover` separada — a convenção do Tailwind/shadcn reaproveita <code style={codeStyle}>accent</code> para estados de hover (`hover:bg-accent`). O ponto de atenção real (ver plano de ação da auditoria) é confirmar que o valor de `accent` aqui bate com o hover usado hoje em produção no R7.
