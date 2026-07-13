@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 
 const meta = {
-  title: 'Components/Forms/Checkbox',
+  title: 'Components/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

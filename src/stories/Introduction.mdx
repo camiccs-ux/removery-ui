@@ -30,11 +30,11 @@ Motion and Grid & Layout foundations aren't documented yet — they're on the ro
 | **Feedback** | Alert |
 | **Layout** | Hover Card, Sidebar |
 | **Navigation** | Breadcrumb, Context Menu, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs |
-| **Forms** | Calendar, Checkbox, Command, Label, Radio Group, Switch, Textarea |
-| **Overlay** | Dialog, Popover, Sheet |
-| **Components** *(generic building blocks — no single category fits)* | Badge, Button, Card, Drawer, Input, Select, Separator, Tooltip |
+| **Components** *(flat — no subfolder, everything else lives directly here)* | Badge, Button, Calendar, Card, Checkbox, Command, Dialog, Drawer, Input, Label, Popover, Radio Group, Select, Separator, Sheet, Switch, Textarea, Tooltip |
 
-This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc). `Menubar` and `Command` aren't part of Removery's original 7-category structure (Data Display / Feedback / Layout / Components / Navigation / Forms / Overlay) — they got placed where they fit best (Menubar → Navigation, Command → Forms) since a dedicated category wasn't specified for them.
+Only **Data Display**, **Feedback**, **Layout**, and **Navigation** are collapsible groups in the sidebar — everything that used to live under Forms/Overlay now sits flat inside **Components**, by design. `Menubar` and `Command` don't map cleanly to any of the 4 collapsible groups either — `Menubar` stayed in Navigation since it's a menu-family component, `Command` moved into the flat Components list.
+
+This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc).
 
 ### Confirmed in Figma, not built yet
 

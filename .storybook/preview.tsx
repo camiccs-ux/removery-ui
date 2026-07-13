@@ -40,8 +40,6 @@ const preview: Preview = {
             'Feedback',
             'Layout',
             'Navigation',
-            'Forms',
-            'Overlay',
           ],
         ],
       },

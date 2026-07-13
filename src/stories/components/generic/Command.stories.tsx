@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/command'
 
 const meta = {
-  title: 'Components/Forms/Command',
+  title: 'Components/Command',
   component: Command,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
