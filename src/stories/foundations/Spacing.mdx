@@ -1,0 +1,102 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Foundations/Spacing" />
+
+export const tableStyle = { width: '100%', borderCollapse: 'collapse', fontSize: 14, marginBottom: 24 }
+export const thStyle = { textAlign: 'left', padding: '10px 12px', borderBottom: '1px solid var(--border)', background: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }
+export const tdStyle = { padding: '10px 12px', borderBottom: '1px solid var(--border)', verticalAlign: 'middle', fontFamily: 'monospace' }
+export const noteStyle = { borderLeft: '3px solid var(--primary)', background: 'var(--muted)', padding: '12px 16px', borderRadius: 4, fontSize: 14, marginBottom: 24 }
+export const codeStyle = { fontSize: 12.5, background: 'var(--background)', border: '1px solid var(--border)', borderRadius: 4, padding: '1px 6px', fontFamily: 'monospace' }
+
+export const SimpleTable = ({ columns, rows }) => (
+  <table style={tableStyle}>
+    <thead><tr>{columns.map((c) => <th key={c} style={thStyle}>{c}</th>)}</tr></thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>{r.map((cell, j) => <td key={j} style={tdStyle}>{cell}</td>)}</tr>
+      ))}
+    </tbody>
+  </table>
+)
+
+# Spacing
+
+The spacing scale keeps padding, gaps, and border radius consistent across components. Unlike the color and status tokens (which are custom Removery values), the tables below come from a Figma variable collection literally named **"Tailwind Primitives"** — it mirrors Tailwind's own default scale 1:1, so what you see in Figma should match the utility classes in code exactly.
+
+<div style={noteStyle}>
+  <strong>Note:</strong> These are raw Tailwind primitives, not custom Removery tokens — <code style={codeStyle}>gap-4</code> is Tailwind's own 16px step, not a Removery-specific value like <code style={codeStyle}>status-confirmed</code>. Border radius has a second, semantic layer on top (see below) that <em>is</em> Removery-specific.
+</div>
+
+## Spacing Tokens (Tailwind Primitives / gap)
+
+Confirmed variable names from the `Tailwind Primitives` collection in the Removery Library — values are Tailwind's own default spacing scale (`spacing-N = N × 4px`), which this collection mirrors by convention rather than overriding.
+
+<SimpleTable
+  columns={['Token', 'Value', 'Tailwind']}
+  rows={[
+    ['gap-0', '0px', 'gap-0, p-0'],
+    ['gap-0.5', '2px', 'gap-0.5, p-0.5'],
+    ['gap-1', '4px', 'gap-1, p-1'],
+    ['gap-1.5', '6px', 'gap-1.5, p-1.5'],
+    ['gap-2', '8px', 'gap-2, p-2'],
+    ['gap-2.5', '10px', 'gap-2.5, p-2.5'],
+    ['gap-3', '12px', 'gap-3, p-3'],
+    ['gap-3.5', '14px', 'gap-3.5, p-3.5'],
+    ['gap-4', '16px', 'gap-4, p-4'],
+    ['gap-5', '20px', 'gap-5, p-5'],
+    ['gap-6', '24px', 'gap-6, p-6'],
+    ['gap-7', '28px', 'gap-7, p-7'],
+    ['gap-8', '32px', 'gap-8, p-8'],
+    ['gap-9', '36px', 'gap-9, p-9'],
+  ]}
+/>
+
+## Border Radius — raw primitives
+
+Also from the `Tailwind Primitives` collection (confirmed names: `rounded-sm`, `rounded-md`, `rounded-xl` — the search likely didn't surface the full set, more steps probably exist). Values are Tailwind v4's default radius scale:
+
+<SimpleTable
+  columns={['Token', 'Value']}
+  rows={[
+    ['rounded-sm', '4px'],
+    ['rounded-md', '6px'],
+    ['rounded-xl', '12px'],
+  ]}
+/>
+
+## Border Radius — semantic scale (🌗 Theme Mode)
+
+This is the layer that's actually Removery-specific: a `radius/rounded-*` scale in the `🌗 Theme Mode` collection, computed from a single base radius rather than raw Tailwind steps — the same pattern this project already uses in `src/index.css` (`--radius` as the base, `--radius-sm/md/lg/xl` derived via `calc()`).
+
+Confirmed **names** in Figma: `rounded-none`, `rounded-xs`, `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xl`, `rounded-2xl`, `rounded-3xl`, `rounded-4xl`, `rounded-6xl`, `rounded-full`. Their **pixel values** aren't confirmed yet (same limitation as the Typography scale — no batch lookup, needs a text/shape layer per token to inspect).
+
+This project's `src/index.css` today only defines 4 of those 11 steps:
+
+<SimpleTable
+  columns={['Token in index.css', 'Value']}
+  rows={[
+    ['--radius (base)', '0.625rem (10px)'],
+    ['--radius-sm', 'calc(var(--radius) - 4px) = 6px'],
+    ['--radius-md', 'calc(var(--radius) - 2px) = 8px'],
+    ['--radius-lg', 'var(--radius) = 10px'],
+    ['--radius-xl', 'calc(var(--radius) + 4px) = 14px'],
+  ]}
+/>
+
+`rounded-none`, `rounded-2xl`, `rounded-3xl`, `rounded-4xl`, and `rounded-6xl` exist in Figma but have no equivalent in this codebase yet — that's a real gap, not an omission in this doc.
+
+## Z-index
+
+No z-index variables exist in the Removery Library — layering isn't tokenized in Figma today. In code, overlay components (Dialog, Sheet, Drawer, Popover, Dropdown/Context Menu) use hardcoded Tailwind utilities rather than a shared scale:
+
+<SimpleTable
+  columns={['Value in use', 'Where']}
+  rows={[
+    ['z-50', 'Dialog, Sheet, Drawer overlays and content, Dropdown/Context Menu, Popover, Tooltip, Command'],
+    ['z-20', 'Sidebar rail'],
+    ['z-10', 'Sidebar container'],
+    ['z-0 / z-[1]', 'Navigation Menu indicator, avatar stacking in Avatar Group'],
+  ]}
+/>
+
+If layering conflicts start showing up as more overlay components are combined, this is the point where a proper `--z-*` token scale should get added — it doesn't exist in Figma to copy from, so the values would need to be defined here first.

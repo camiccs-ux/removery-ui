@@ -16,23 +16,62 @@ Design decisions that underpin every component:
 - **Typography** — font families (Archivo + ABC Social Extended), confirmed sizes/weights/line-heights read directly from Figma
 - **Dark Mode** — CSS variable system and how to activate it
 - **Accessibility** — WCAG 2.1 AA contrast targets, keyboard nav, ARIA patterns, and a testing checklist
+- **Spacing** — gap/padding scale and border radius, confirmed from the Figma `Tailwind Primitives` and `🌗 Theme Mode` collections
 
-Spacing, Motion, and Grid & Layout foundations aren't documented yet — they're on the roadmap, not skipped by mistake.
+Motion and Grid & Layout foundations aren't documented yet — they're on the roadmap, not skipped by mistake.
 
 ### Components
 
-31 components confirmed against the Removery Library audit, organized by function:
+33 components confirmed against the Removery Library audit, organized by function:
 
 | Category | Components |
 |---|---|
-| **Actions** | Button |
-| **Data Entry** | Input, Label, Textarea, Checkbox, Radio Group, Switch, Select, Calendar |
-| **Data Display** | Card, Badge, Avatar, Avatar Group, Progress, Skeleton, Accordion, Data Table |
-| **Feedback** | Alert, Dialog, Sheet, Drawer, Tooltip, Popover, Hover Card |
-| **Navigation** | Tabs, Breadcrumb, Pagination, Dropdown Menu, Context Menu, Menubar, Navigation Menu, Command |
-| **Layout** | Sidebar |
+| **Data Display** | Accordion, Avatar, Avatar Group, Data Table, Progress, Skeleton |
+| **Feedback** | Alert |
+| **Layout** | Hover Card, Sidebar |
+| **Navigation** | Breadcrumb, Context Menu, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs |
+| **Forms** | Calendar, Checkbox, Command, Label, Radio Group, Switch, Textarea |
+| **Overlay** | Dialog, Popover, Sheet |
+| **Components** *(generic building blocks — no single category fits)* | Badge, Button, Card, Drawer, Input, Select, Separator, Tooltip |
 
-This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc). Anything still missing from the Figma library can be added following the same pattern used here.
+This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc). `Menubar` and `Command` aren't part of Removery's original 7-category structure (Data Display / Feedback / Layout / Components / Navigation / Forms / Overlay) — they got placed where they fit best (Menubar → Navigation, Command → Forms) since a dedicated category wasn't specified for them.
+
+### Confirmed in Figma, not built yet
+
+These exist as real component sets in the Removery Library — search-confirmed, not guessed — but don't have a React implementation here yet:
+
+| Component (Figma name) | Suggested category |
+|---|---|
+| `carousel` | Data Display |
+| `collapsible` | Layout |
+| `container` | Layout |
+| `alert dialog` | Feedback |
+| `sooner` (renamed from `sonner`) | Feedback — this is Toast |
+| `slider` | Forms |
+| `toggle` / `toggle group` | Forms |
+| `switch group` | Forms |
+| `date picker` | Forms |
+| `combobox` | Forms |
+| `input otp` | Forms |
+| `tag` | Components |
+| `Rating` / `icons-rating` | Components |
+
+`Toast` deserves the highest priority of this list — the audit already confirmed the Figma component is named `sooner`/`sonner`, and shadcn's own Toast implementation is literally built on the `sonner` package, so this is a near-zero-friction addition.
+
+### Not found in Figma (absence isn't proof — just unconfirmed)
+
+`Spinner`, `Banner`, `Stack`, `Grid`, `ScrollArea`, `AspectRatio`, `ResizablePanels`, `FileUpload`, `Stepper`, `TreeView`, `Timeline`, `Meter`, `SegmentedControl`, and `DateRangePicker`/`TimePicker` didn't turn up in single-term searches of the library — per the project's own search convention, that doesn't confirm they don't exist, only that they weren't found this way. `Spinner` is worth building regardless of Figma status; it's a standard loading pattern most apps need and costs little to add.
+
+### Naming consolidation — don't build duplicates
+
+A few items from common design-system templates would just duplicate something Removery UI already has, or duplicate each other:
+
+- **IconButton** — already covered by `Button` with `variant="ghost" size="icon"` (see `SidebarTrigger` for a real usage example). No separate component needed.
+- **Divider** — already covered by `Separator` (same shadcn/Radix pattern, just a different name). Keep `Separator`, don't add `Divider`.
+- **ToggleSwitch** — already covered by `Switch`. Same component, different name.
+- **PasswordInput / SearchInput / NumberInput** — these are visual/behavioral variants of `Input` (a show/hide icon, a search icon + clear button, spinner controls), not structurally different components. Worth composing on top of `Input` rather than building three new base components.
+- **PinInput / TagInput / DateRangePicker / TimePicker** — these *do* have genuinely different interaction models (segmented input, multi-value chips, dual calendars, time wheels) and are worth building as their own components later — just not as thin `Input` wrappers.
+- **Chip / NotificationBadge** vs **Badge / Tag** — heavy overlap. Recommend confirming a real distinct use case in R7 before adding either; otherwise `Badge` (status/flags) and `Tag` (removable, once built) should cover it.
 
 ## Getting Started
 

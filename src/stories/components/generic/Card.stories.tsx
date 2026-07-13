@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
 const meta = {
-  title: 'Components/Data Display/Card',
+  title: 'Components/Card',
   component: Card,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

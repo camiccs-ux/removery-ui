@@ -4,7 +4,7 @@ import { Calendar } from '@/components/ui/calendar'
 import type { DateRange } from 'react-day-picker'
 
 const meta = {
-  title: 'Components/Data Entry/Calendar',
+  title: 'Components/Forms/Calendar',
   component: Calendar,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

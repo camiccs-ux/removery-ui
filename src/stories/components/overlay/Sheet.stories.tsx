@@ -3,7 +3,7 @@ import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescri
 import { Button } from '@/components/ui/button'
 
 const meta = {
-  title: 'Components/Feedback/Sheet',
+  title: 'Components/Overlay/Sheet',
   component: Sheet,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

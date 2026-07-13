@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { Button } from '@/components/ui/button'
 
 const meta = {
-  title: 'Components/Feedback/Dialog',
+  title: 'Components/Overlay/Dialog',
   component: Dialog,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

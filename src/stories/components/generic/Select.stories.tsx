@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 
 const meta = {
-  title: 'Components/Data Entry/Select',
+  title: 'Components/Select',
   component: Select,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

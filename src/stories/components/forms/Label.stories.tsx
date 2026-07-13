@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 const meta = {
-  title: 'Components/Data Entry/Switch',
-  component: Switch,
+  title: 'Components/Forms/Label',
+  component: Label,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
-} satisfies Meta<typeof Switch>
+} satisfies Meta<typeof Label>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <div className="flex items-center gap-2">
-      <Switch id="notify" defaultChecked />
-      <Label htmlFor="notify">Send reminder notifications</Label>
+    <div className="grid gap-1.5">
+      <Label htmlFor="client-name">Client name</Label>
+      <Input id="client-name" placeholder="Jordan Reyes" />
     </div>
   ),
 }

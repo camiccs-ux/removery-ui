@@ -5,6 +5,20 @@ import { Meta } from '@storybook/addon-docs/blocks'
 export const tableStyle = { width: '100%', borderCollapse: 'collapse', fontSize: 14, marginBottom: 24 }
 export const thStyle = { textAlign: 'left', padding: '10px 12px', borderBottom: '1px solid var(--border)', background: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }
 export const tdStyle = { padding: '10px 12px', borderBottom: '1px solid var(--border)', verticalAlign: 'middle' }
+export const monoTd = { ...tdStyle, fontFamily: 'monospace' }
+export const noteStyle = { borderLeft: '3px solid var(--primary)', background: 'var(--muted)', padding: '12px 16px', borderRadius: 4, fontSize: 14, marginBottom: 24 }
+export const codeStyle = { fontSize: 12.5, background: 'var(--background)', border: '1px solid var(--border)', borderRadius: 4, padding: '1px 6px', fontFamily: 'monospace' }
+
+export const SimpleTable = ({ columns, rows, mono }) => (
+  <table style={tableStyle}>
+    <thead><tr>{columns.map((c) => <th key={c} style={thStyle}>{c}</th>)}</tr></thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>{r.map((cell, j) => <td key={j} style={mono && j === 0 ? monoTd : tdStyle}>{cell}</td>)}</tr>
+      ))}
+    </tbody>
+  </table>
+)
 
 export const SpecTable = ({ rows }) => (
   <table style={tableStyle}>
@@ -21,7 +35,7 @@ export const SpecTable = ({ rows }) => (
     <tbody>
       {rows.map((r, i) => (
         <tr key={i}>
-          <td style={{ ...tdStyle, fontFamily: 'monospace' }}>{r.token}</td>
+          <td style={monoTd}>{r.token}</td>
           <td style={tdStyle}>{r.family}</td>
           <td style={tdStyle}>{r.size}</td>
           <td style={tdStyle}>{r.weight}</td>
@@ -37,33 +51,70 @@ export const SpecTable = ({ rows }) => (
 
 # Typography
 
-Values confirmed directly from the Removery Library Figma file via `get_design_context` — not approximated. Unlike the colors (still pending sync), the tokens below were already read from the real Figma source.
+Removery UI uses two font families for visual hierarchy, both confirmed directly from the Removery Library Figma file via `get_design_context` — unlike colors (still pending sync), these values were read from the real Figma source, not estimated.
 
-## Font families
+## Font Families
 
-The Removery Library defines 5 family variables (`font/body-text`, `font/display-text`, `font/mono-text`, `font/serif-text`, `font/caveat-text`) in the `🌗 Theme Mode` collection. Today, only the first two are actually used — `mono-text`, `serif-text`, and `caveat-text` exist in the library but aren't applied anywhere in R7 or the public funnel.
-
-<SpecTable
+<SimpleTable
+  mono
+  columns={['Token', 'Font', 'Usage']}
   rows={[
-    { token: 'font/body-text', family: 'Archivo', size: '—', weight: '—', lineHeight: '—', fontFamilyCss: 'Archivo, sans-serif' },
-    { token: 'font/display-text', family: 'ABC Social Extended', size: '—', weight: '—', lineHeight: '—', fontFamilyCss: '"ABC Social Extended", Archivo, sans-serif' },
+    ['font-display', 'ABC Social Extended', 'Display styles (e.g. display/xs) — headings and large emphasis text. Licensed font (ABC Dinamo), needs self-hosted @font-face files; falls back to Archivo until then.'],
+    ['font-body', 'Archivo', 'Body text, paragraphs, form inputs, UI labels — the default for everything else.'],
   ]}
 />
 
-`ABC Social Extended` is a licensed font (ABC Dinamo) — the font files need to be added to the project (self-hosted, via `@font-face`) before it renders correctly. Until then, it falls back to `Archivo`.
+`font-mono-text`, `font-serif-text`, and `font-caveat-text` also exist as variables in the Removery Library, but aren't applied anywhere in R7 or the public funnel today — not included above since they're unused.
+
+## Font Sizes
+
+<div style={noteStyle}>
+  <strong>Note:</strong> The token names in Figma (<code style={codeStyle}>font-size/text-base</code>, etc.) match Tailwind's own scale exactly. Only <code style={codeStyle}>text-base</code> (16px) was individually confirmed on a real text layer — the rest of this table follows Tailwind's standard scale by naming convention, not a layer-by-layer check yet.
+</div>
+
+<SimpleTable
+  mono
+  columns={['Token', 'Rem', 'Pixels', 'Confirmed?']}
+  rows={[
+    ['text-xs', '0.75rem', '12px', 'Inferred'],
+    ['text-sm', '0.875rem', '14px', 'Inferred'],
+    ['text-base', '1rem', '16px', '✅ Figma-confirmed'],
+    ['text-lg', '1.125rem', '18px', 'Inferred'],
+    ['text-xl', '1.25rem', '20px', 'Inferred'],
+    ['text-2xl', '1.5rem', '24px', 'Inferred'],
+    ['text-3xl', '1.875rem', '30px', 'Inferred'],
+  ]}
+/>
+
+## Font Weights
+
+<div style={noteStyle}>
+  <strong>Note:</strong> Same situation as sizes — <code style={codeStyle}>font-semibold</code> (600) and <code style={codeStyle}>font-bold</code> (700) were confirmed on real text layers (body/text-base/semibold and display/xs). <code style={codeStyle}>font-normal</code> and <code style={codeStyle}>font-medium</code> follow the same Tailwind-standard naming but haven't been checked individually yet.
+</div>
+
+<SimpleTable
+  mono
+  columns={['Token', 'Value', 'Confirmed?']}
+  rows={[
+    ['font-normal', '400', 'Inferred'],
+    ['font-medium', '500', 'Inferred'],
+    ['font-semibold', '600', '✅ Figma-confirmed'],
+    ['font-bold', '700', '✅ Figma-confirmed'],
+  ]}
+/>
 
 ## Confirmed styles
 
-These two styles were read directly from text layers in Figma (not estimates):
+These two composite styles were read directly from named text layers in Figma — they show how family, size, weight, and line-height combine for a specific Removery Library style (not just the raw primitive scale above):
 
 <SpecTable
   rows={[
     {
       token: 'body/text-base/semibold',
       family: 'Archivo (SemiBold)',
-      size: '16px (font-size/text-base)',
-      weight: '600 (font-weight/font-semibold)',
-      lineHeight: '24px (line-height/leading-6)',
+      size: '16px (text-base)',
+      weight: '600 (font-semibold)',
+      lineHeight: '24px (leading-6)',
       fontFamilyCss: 'Archivo, sans-serif',
       fontWeightCss: 600,
       fontSizeCss: 16,
@@ -72,9 +123,9 @@ These two styles were read directly from text layers in Figma (not estimates):
     {
       token: 'display/xs',
       family: 'ABC Social Extended (Bold)',
-      size: '16px (font-size/text-base)',
-      weight: '700 (font-weight/font-bold)',
-      lineHeight: '24px (line-height/leading-6)',
+      size: '16px (text-base)',
+      weight: '700 (font-bold)',
+      lineHeight: '24px (leading-6)',
       fontFamilyCss: '"ABC Social Extended", Archivo, sans-serif',
       fontWeightCss: 700,
       fontSizeCss: 16,
@@ -85,6 +136,6 @@ These two styles were read directly from text layers in Figma (not estimates):
 
 ## Scale pending confirmation
 
-The library has 6 more `display` steps (`sm`, `md`, `lg`, `xl`, `2xl`, `3xl`) and the full `body` scale (`text-xs`, `text-sm`, `text-lg`, `text-xl`, each in `normal`/`semibold`/`bold`) — we just haven't pulled the exact px/line-height for each yet, since that requires opening one text layer per style in Figma (no batch lookup available). The token names (`font-size/text-*`, `line-height/leading-*`, `font-weight/font-*`) follow Tailwind's standard scale exactly, so it's likely the values match Tailwind's defaults — but that isn't confirmed and shouldn't be assumed until we check layer by layer.
+The library has 6 more `display` steps (`sm`, `md`, `lg`, `xl`, `2xl`, `3xl`) and the full `body` scale (`text-xs`, `text-sm`, `text-lg`, `text-xl`, each in `normal`/`semibold`/`bold`) as named composite styles — same idea as `body/text-base/semibold` above, just not pulled yet. Confirming each one requires opening one text layer per style in Figma (no batch lookup available).
 
-If you want to close out the full scale, send the link to another text layer (Copy link to selection, on a layer styled `display/lg` or `body/text-xs/normal`, for example) and this table will keep growing.
+If you want to close out the full scale, send the link to another text layer (Copy link to selection, on a layer styled `display/lg` or `body/text-xs/normal`, for example) and this page will keep growing.
