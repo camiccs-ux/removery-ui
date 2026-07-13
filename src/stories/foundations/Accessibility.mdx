@@ -1,0 +1,126 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Foundations/Accessibility" />
+
+export const tableStyle = { width: '100%', borderCollapse: 'collapse', fontSize: 14, marginBottom: 24 }
+export const thStyle = { textAlign: 'left', padding: '10px 12px', borderBottom: '1px solid var(--border)', background: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }
+export const tdStyle = { padding: '10px 12px', borderBottom: '1px solid var(--border)', verticalAlign: 'middle' }
+
+export const SimpleTable = ({ columns, rows }) => (
+  <table style={tableStyle}>
+    <thead>
+      <tr>{columns.map((c) => <th key={c} style={thStyle}>{c}</th>)}</tr>
+    </thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>{r.map((cell, j) => <td key={j} style={tdStyle}>{cell}</td>)}</tr>
+      ))}
+    </tbody>
+  </table>
+)
+
+# Accessibility Guidelines
+
+Removery UI targets WCAG 2.1 AA as the baseline for every component. Most of the keyboard and ARIA behavior below comes for free from Radix UI, which every interactive component in this library is built on — it isn't reimplemented by hand.
+
+## Color Contrast
+
+All text/background pairings must meet minimum contrast ratios:
+
+<SimpleTable
+  columns={['Context', 'Minimum Ratio', 'WCAG Level']}
+  rows={[
+    ['Normal text (< 18px)', '4.5:1', 'AA'],
+    ['Large text (≥ 18px / 14px bold)', '3:1', 'AA'],
+    ['UI components & graphical objects', '3:1', 'AA'],
+  ]}
+/>
+
+## Verified Pairings
+
+Ratios below are calculated from the actual hex values currently in `src/index.css` — which, as noted in Foundations → Colors, are still visual approximations pending sync with the published Figma variables. Recalculate once the real values are confirmed.
+
+<SimpleTable
+  columns={['Pairing', 'Ratio', 'Status']}
+  rows={[
+    ['Foreground on Background', '18.32:1', 'AAA'],
+    ['Primary Foreground on Primary', '5.64:1', 'AA'],
+    ['Accent Foreground on Accent', '13.19:1', 'AAA'],
+    ['White on Destructive', '4.78:1', 'AA'],
+    ['Muted Foreground on Muted', '5.34:1', 'AA'],
+    ['Muted Foreground on Background', '5.82:1', 'AA'],
+    ['Ring on Background', '5.63:1', 'AA'],
+    ['status-confirmed on status-confirmed-bg', '3.09:1', 'AA (large text only)'],
+    ['status-pending on status-pending-bg', '3.24:1', 'AA (large text only)'],
+  ]}
+/>
+
+The `status-confirmed` and `status-pending` pairings only clear AA at large-text/UI-component thresholds (3:1), not normal text (4.5:1) — that's why `Badge` renders status labels at a minimum font size. Four other status tokens (`status-new`, `status-checked-in`, `status-noshow`, `status-blocked`) currently fail even the 3:1 threshold — see Foundations → Colors for the full breakdown and the fix that's pending.
+
+## Keyboard Navigation
+
+All interactive components support full keyboard navigation, via Radix's built-in behavior:
+
+- **Tab** — move focus between interactive elements
+- **Enter / Space** — activate buttons, toggle switches, select items
+- **Arrow keys** — navigate within composite widgets (Tabs, Menubar, Dropdown Menu, Context Menu, Navigation Menu, Radio Group, Select)
+- **Escape** — close Dialog, Sheet, Drawer, Popover, Dropdown Menu, and Context Menu
+- **Home / End** — jump to the first/last item in Select, Command, and menu lists
+
+## Focus Management
+
+- Focusable elements show a visible focus ring using `--ring` (5.63:1 against background — clears the 3:1 UI-component threshold)
+- Focus rings use Tailwind's `focus-visible:ring-2` / `ring-[3px]` utilities, consistent across components
+- Focus is trapped inside Dialog, Sheet, Drawer, and AlertDialog-style overlays (Radix `Dialog.Root` / `vaul`'s drawer both handle this)
+- Focus returns to the trigger element when an overlay closes (Radix default behavior — not something this project overrides)
+
+## ARIA Patterns
+
+<SimpleTable
+  columns={['Component', 'Pattern']}
+  rows={[
+    ['Alert', 'role="alert" — set explicitly in src/components/ui/alert.tsx'],
+    ['Dialog / Sheet', 'role="dialog" with aria-labelledby / aria-describedby, via Radix Dialog'],
+    ['Tabs', 'role="tablist", role="tab", role="tabpanel", via Radix Tabs'],
+    ['Dropdown Menu / Context Menu / Menubar', 'role="menu" and role="menuitem", via Radix'],
+    ['Progress', 'role="progressbar" with aria-valuenow / aria-valuemin / aria-valuemax, via Radix Progress'],
+    ['Breadcrumb', 'aria-label="breadcrumb" on <nav>, aria-current="page" on the active item'],
+    ['Pagination', 'role="navigation" with aria-label="pagination"'],
+  ]}
+/>
+
+Removery UI doesn't have a Tree View component yet, so there's no `role="tree"` pattern to document — it'll be added here if one gets built.
+
+## Screen Reader Support
+
+- Use Tailwind's `sr-only` utility class for screen-reader-only text (used today in `CommandDialog`'s hidden title/description) — there's no separate `VisuallyHidden` component in this project, `sr-only` covers the same need
+- Icon-only buttons (like `SidebarTrigger`) include `aria-label`
+- Form inputs are associated with labels via the `Label` component's `htmlFor`
+- Error messages should be linked with `aria-describedby` — this isn't wired up automatically by any component yet, it's on the implementer to add per form
+
+## Reduced Motion
+
+The system respects `prefers-reduced-motion`, added globally in `src/index.css`:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+## Testing Checklist
+
+Before shipping any new component or page:
+
+- Verify color contrast with a tool (e.g., axe DevTools, Lighthouse) — don't trust the placeholder hex values in `index.css` until they're synced with Figma
+- Navigate the entire flow using only a keyboard
+- Test with a screen reader (VoiceOver, NVDA)
+- Confirm `prefers-reduced-motion` is respected
+- Validate HTML semantics (headings, landmarks, lists)
+- Check for focus trapping in overlays (Dialog, Sheet, Drawer)
+- Verify touch targets are at least 44×44px on mobile — several `size="icon"` buttons in this library are currently 36px (`size-9`) and need review for touch contexts
