@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/sidebar'
 
 const meta = {
-  title: 'Components/Layout/Sidebar',
+  title: 'Layout/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
   parameters: { layout: 'fullscreen' },

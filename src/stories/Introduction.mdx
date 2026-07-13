@@ -32,7 +32,7 @@ Motion and Grid & Layout foundations aren't documented yet — they're on the ro
 | **Navigation** | Breadcrumb, Context Menu, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs |
 | **Components** *(flat — no subfolder, everything else lives directly here)* | Avatar Group, Badge, Button, Calendar, Card, Checkbox, Command, Dialog, Drawer, Input, Label, Popover, Radio Group, Select, Separator, Sheet, Switch, Textarea, Tooltip |
 
-Only **Data Display**, **Feedback**, **Layout**, and **Navigation** are collapsible groups in the sidebar — everything else sits flat inside **Components**, by design. `Menubar` and `Command` don't map cleanly to any of the 4 collapsible groups either — `Menubar` stayed in Navigation since it's a menu-family component, `Command` moved into the flat Components list.
+**Data Display**, **Feedback**, **Layout**, **Navigation**, and **Components** are five separate top-level collapsible groups in the sidebar (siblings, not nested inside one another) — everything that doesn't fit the first four sits flat inside **Components**, by design. `Menubar` and `Command` don't map cleanly to any of the 4 collapsible groups either — `Menubar` stayed in Navigation since it's a menu-family component, `Command` moved into the flat Components list.
 
 `DataTable` and `Table` are intentionally both listed: `Table` demonstrates the raw primitives (`TableHeader`, `TableRow`, `TableCell`, etc. — all from the same `table.tsx` file), while `DataTable` shows the composed R7 pattern (status badges, studio/time columns) built on top of those primitives. There's no separate `data-table.tsx` file — both stories import from `table.tsx`.
 

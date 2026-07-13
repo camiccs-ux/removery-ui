@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/menubar'
 
 const meta = {
-  title: 'Components/Navigation/Menubar',
+  title: 'Navigation/Menubar',
   component: Menubar,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

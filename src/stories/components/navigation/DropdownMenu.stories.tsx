@@ -10,7 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 const meta = {
-  title: 'Components/Navigation/Dropdown Menu',
+  title: 'Navigation/Dropdown Menu',
   component: DropdownMenu,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },

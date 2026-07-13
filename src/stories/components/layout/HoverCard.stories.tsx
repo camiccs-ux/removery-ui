@@ -3,7 +3,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 const meta = {
-  title: 'Components/Layout/Hover Card',
+  title: 'Layout/Hover Card',
   component: HoverCard,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
