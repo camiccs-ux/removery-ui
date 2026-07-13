@@ -4,21 +4,21 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Dark Mode
 
-O sistema usa variáveis CSS por classe (`.dark`), o mesmo padrão do shadcn/ui — cada token tem um valor em `:root` (light) e outro em `.dark` (dark), definidos em `src/index.css`.
+The system uses per-class CSS variables (`.dark`), the same pattern as shadcn/ui — every token has a `:root` (light) value and a `.dark` (dark) value, defined in `src/index.css`.
 
-## Como ativar
+## How to activate
 
 ```tsx
-// No elemento raiz do app (ou de uma seção específica):
+// On the app's root element (or a specific section):
 <html className={isDarkMode ? "dark" : ""}>
 ```
 
-Todos os componentes já usam os tokens semânticos (`bg-background`, `text-foreground`, `bg-primary`, etc.) em vez de cores fixas — então ativar `.dark` na raiz já propaga para todo o app automaticamente, sem precisar tocar em nenhum componente individual.
+Every component already uses semantic tokens (`bg-background`, `text-foreground`, `bg-primary`, etc.) instead of hardcoded colors — so toggling `.dark` on the root propagates through the whole app automatically, with no changes needed to individual components.
 
-## Testar no Storybook
+## Testing in Storybook
 
-Use o seletor de tema (ícone de sol/lua) na barra de ferramentas no topo do Storybook — ele aplica a classe `.dark` no preview em tempo real.
+Use the theme switcher (sun/moon icon) in the toolbar at the top of Storybook — it applies the `.dark` class to the preview live.
 
-## Nota sobre a collection `🖼️ Theme`
+## Note on the `🖼️ Theme` collection
 
-A Removery Library tem uma segunda collection de variáveis (`🖼️ Theme`), reservada para uma possível marca/tema futuro — **não é o dark mode** e não deve ser confundida com ele. A collection que este projeto reflete é a `🌗 Theme Mode`, que é a publicada e em uso hoje.
+The Removery Library has a second variable collection (`🖼️ Theme`), reserved for a possible future brand/theme — **it is not dark mode** and shouldn't be confused with it. The collection this project reflects is `🌗 Theme Mode`, which is the one published and in use today.

@@ -4,39 +4,83 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Removery UI
 
-Biblioteca de componentes React, tokens de design e padrões de uso, espelhando a **Removery Library** no Figma — construída a partir da auditoria do design system.
+Welcome to Removery UI — a React component library and design token catalog that mirrors the **Removery Library** in Figma, built during the design system audit of the R7 Scheduling module. It's structured like shadcn/ui: components are hand-written, own-your-code building blocks (Radix primitives + Tailwind), not a black-box package.
 
-## O que tem aqui
+## What's Inside
 
 ### Foundations
 
-Decisões que servem de base para todos os componentes:
+Design decisions that underpin every component:
 
-- **Colors** — paleta da collection `🌗 Theme Mode`, incluindo os tokens semânticos de status (`status-new`, `status-pending`, `status-confirmed`, `status-checked-in`, `status-in-service`, `status-noshow`, `status-blocked`)
-- **Typography** — escala e pesos de fonte
-- **Dark Mode** — sistema de variáveis CSS e como ativar
-- **Accessibility** — contraste, foco, navegação por teclado
+- **Colors** — brand palette from the `🌗 Theme Mode` collection, including the R7 scheduling status tokens (`status-new`, `status-pending`, `status-confirmed`, `status-checked-in`, `status-in-service`, `status-noshow`, `status-blocked`)
+- **Typography** — font families (Archivo + ABC Social Extended), confirmed sizes/weights/line-heights read directly from Figma
+- **Dark Mode** — CSS variable system and how to activate it
+
+Spacing, Motion, Accessibility, and Grid & Layout foundations aren't documented yet — they're on the roadmap, not skipped by mistake.
 
 ### Components
 
-Componentes confirmados na auditoria da Removery Library, organizados por função:
+31 components confirmed against the Removery Library audit, organized by function:
 
-| Categoria | Componentes |
+| Category | Components |
 |---|---|
 | **Actions** | Button |
-| **Data Entry** | Input, Label, Textarea, Checkbox, Radio Group, Switch, Select |
-| **Data Display** | Card, Badge, Avatar, Progress, Skeleton |
-| **Feedback** | Alert, Dialog, Sheet, Tooltip, Popover |
-| **Navigation** | Tabs |
+| **Data Entry** | Input, Label, Textarea, Checkbox, Radio Group, Switch, Select, Calendar |
+| **Data Display** | Card, Badge, Avatar, Avatar Group, Progress, Skeleton, Accordion, Data Table |
+| **Feedback** | Alert, Dialog, Sheet, Drawer, Tooltip, Popover, Hover Card |
+| **Navigation** | Tabs, Breadcrumb, Pagination, Dropdown Menu, Context Menu, Menubar, Navigation Menu, Command |
+| **Layout** | Sidebar |
 
-## Sobre este catálogo
+This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc). Anything still missing from the Figma library can be added following the same pattern used here.
 
-Este não é ainda um espelho 1:1 completo da Removery Library — é o ponto de partida com os componentes já confirmados e mapeados na auditoria (ver documento *Auditoria — Removery Library vs. Uso no R7*). A lista real da lib é maior (Calendar, Data Table, Drawer, Dropdown Menu, Command, Avatar Group, Menubar, Navigation Menu, Hover Card, Context Menu, Accordion, Breadcrumb, Pagination, Sidebar e outros) — cada um pode ser adicionado seguindo o mesmo padrão usado aqui.
+## Getting Started
 
-**Como adicionar um componente novo:**
-1. Confirme o componente e as variantes no Figma (via MCP ou visualmente).
-2. Crie o arquivo em `src/components/ui/<nome>.tsx`, seguindo a convenção shadcn/ui (Radix + `class-variance-authority` + `cn()`).
-3. Crie a story em `src/stories/components/<categoria>/<Nome>.stories.tsx` com `tags: ['autodocs']`.
-4. Rode `npm run storybook` para conferir.
+### How this library works
 
-**Valores de cor:** os tokens em `src/index.css` usam os **nomes reais** das variáveis do Figma, mas os valores hexadecimais são aproximações visuais — ver nota no topo do arquivo. Sincronizar com os valores exatos antes de publicar para o time.
+There's no published npm package (yet) — like shadcn/ui, you own the code. Copy the component file(s) you need from `src/components/ui/` into your own project, along with their Radix peer dependency.
+
+### Local setup
+
+```
+# 1. Install dependencies
+npm install
+
+# 2. Run Storybook
+npm run storybook
+
+# 3. Run the app shell (optional, for manual QA)
+npm run dev
+```
+
+### Tailwind config
+
+This project uses **Tailwind v4** — tokens live directly in `src/index.css` under `@theme inline`, no `tailwind.config.js` needed. Path alias `@/*` is set up in `vite.config.ts`, `tsconfig.json`, and `components.json`, matching shadcn/ui conventions.
+
+### Import styles
+
+```tsx
+// main.tsx
+import './index.css'
+```
+
+### Load fonts
+
+Archivo (`font/body-text`) is available on Google Fonts:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+```
+
+ABC Social Extended (`font/display-text`) is a **licensed font** (ABC Dinamo) — it isn't on Google Fonts. The font files need to be added to the project and self-hosted via `@font-face` before it renders correctly; until then it falls back to Archivo.
+
+### Use a component
+
+```tsx
+import { Button } from '@/components/ui/button'
+
+<Button variant="pill">Book Free Consultation</Button>
+```
+
+For color and typography values, see **Foundations → Colors** and **Foundations → Typography**. Color hex values are currently visual approximations pending sync with the published Figma variables — see the note at the top of `src/index.css`.
