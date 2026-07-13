@@ -26,13 +26,15 @@ Motion and Grid & Layout foundations aren't documented yet — they're on the ro
 
 | Category | Components |
 |---|---|
-| **Data Display** | Accordion, Avatar, Avatar Group, Data Table, Progress, Skeleton |
+| **Data Display** | Accordion, Avatar, DataTable, Progress, Skeleton, Table |
 | **Feedback** | Alert |
 | **Layout** | Hover Card, Sidebar |
 | **Navigation** | Breadcrumb, Context Menu, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs |
-| **Components** *(flat — no subfolder, everything else lives directly here)* | Badge, Button, Calendar, Card, Checkbox, Command, Dialog, Drawer, Input, Label, Popover, Radio Group, Select, Separator, Sheet, Switch, Textarea, Tooltip |
+| **Components** *(flat — no subfolder, everything else lives directly here)* | Avatar Group, Badge, Button, Calendar, Card, Checkbox, Command, Dialog, Drawer, Input, Label, Popover, Radio Group, Select, Separator, Sheet, Switch, Textarea, Tooltip |
 
-Only **Data Display**, **Feedback**, **Layout**, and **Navigation** are collapsible groups in the sidebar — everything that used to live under Forms/Overlay now sits flat inside **Components**, by design. `Menubar` and `Command` don't map cleanly to any of the 4 collapsible groups either — `Menubar` stayed in Navigation since it's a menu-family component, `Command` moved into the flat Components list.
+Only **Data Display**, **Feedback**, **Layout**, and **Navigation** are collapsible groups in the sidebar — everything else sits flat inside **Components**, by design. `Menubar` and `Command` don't map cleanly to any of the 4 collapsible groups either — `Menubar` stayed in Navigation since it's a menu-family component, `Command` moved into the flat Components list.
+
+`DataTable` and `Table` are intentionally both listed: `Table` demonstrates the raw primitives (`TableHeader`, `TableRow`, `TableCell`, etc. — all from the same `table.tsx` file), while `DataTable` shows the composed R7 pattern (status badges, studio/time columns) built on top of those primitives. There's no separate `data-table.tsx` file — both stories import from `table.tsx`.
 
 This isn't a full 1:1 mirror of the Removery Library yet — it's every component confirmed and mapped so far in the audit (see the *Removery Library vs. R7 Usage* audit doc).
 
@@ -47,12 +49,12 @@ These exist as real component sets in the Removery Library — search-confirmed,
 | `container` | Layout |
 | `alert dialog` | Feedback |
 | `sooner` (renamed from `sonner`) | Feedback — this is Toast |
-| `slider` | Forms |
-| `toggle` / `toggle group` | Forms |
-| `switch group` | Forms |
-| `date picker` | Forms |
-| `combobox` | Forms |
-| `input otp` | Forms |
+| `slider` | Components |
+| `toggle` / `toggle group` | Components |
+| `switch group` | Components |
+| `date picker` | Components |
+| `combobox` | Components |
+| `input otp` | Components |
 | `tag` | Components |
 | `Rating` / `icons-rating` | Components |
 

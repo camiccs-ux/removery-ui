@@ -3,7 +3,7 @@ import { AvatarGroup } from '@/components/ui/avatar-group'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 const meta = {
-  title: 'Components/Data Display/Avatar Group',
+  title: 'Components/Avatar Group',
   component: AvatarGroup,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
