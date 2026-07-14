@@ -21,69 +21,118 @@ export const SimpleTable = ({ columns, rows }) => (
 
 # Spacing
 
-The spacing scale keeps padding, gaps, and border radius consistent across components. Unlike the color and status tokens (which are custom Removery values), the tables below come from a Figma variable collection literally named **"Tailwind Primitives"** — it mirrors Tailwind's own default scale 1:1, so what you see in Figma should match the utility classes in code exactly.
+The spacing scale keeps padding, gaps, and border radius consistent across components. All values on this page are ✅ **Figma-confirmed**, sourced from `tokens.json` — the real export of the **"Tailwind Primitives"** collection (padding/gap/border-radius) and the **"🌗 Theme Mode"** collection (semantic radius) in the Removery Library.
 
 <div style={noteStyle}>
-  <strong>Note:</strong> These are raw Tailwind primitives, not custom Removery tokens — <code style={codeStyle}>gap-4</code> is Tailwind's own 16px step, not a Removery-specific value like <code style={codeStyle}>status-confirmed</code>. Border radius has a second, semantic layer on top (see below) that <em>is</em> Removery-specific.
+  <strong>Note:</strong> The base 4px-unit scale matches Tailwind's own defaults, but the collection extends well past Tailwind's stock scale — steps like <code style={codeStyle}>gap-13</code> (52px), <code style={codeStyle}>gap-17</code> (68px), <code style={codeStyle}>p-30</code> (120px), and <code style={codeStyle}>p-48</code> (192px) don't exist in Tailwind out of the box. This is a genuinely extended Removery-specific scale, not a 1:1 mirror as previously documented.
 </div>
 
-## Spacing Tokens (Tailwind Primitives / gap)
-
-Confirmed variable names from the `Tailwind Primitives` collection in the Removery Library — values are Tailwind's own default spacing scale (`spacing-N = N × 4px`), which this collection mirrors by convention rather than overriding.
+## Gap
 
 <SimpleTable
-  columns={['Token', 'Value', 'Tailwind']}
+  columns={['Token', 'Value']}
   rows={[
-    ['gap-0', '0px', 'gap-0, p-0'],
-    ['gap-0.5', '2px', 'gap-0.5, p-0.5'],
-    ['gap-1', '4px', 'gap-1, p-1'],
-    ['gap-1.5', '6px', 'gap-1.5, p-1.5'],
-    ['gap-2', '8px', 'gap-2, p-2'],
-    ['gap-2.5', '10px', 'gap-2.5, p-2.5'],
-    ['gap-3', '12px', 'gap-3, p-3'],
-    ['gap-3.5', '14px', 'gap-3.5, p-3.5'],
-    ['gap-4', '16px', 'gap-4, p-4'],
-    ['gap-5', '20px', 'gap-5, p-5'],
-    ['gap-6', '24px', 'gap-6, p-6'],
-    ['gap-7', '28px', 'gap-7, p-7'],
-    ['gap-8', '32px', 'gap-8, p-8'],
-    ['gap-9', '36px', 'gap-9, p-9'],
+    ['gap-0', '0px'], ['gap-0.5', '2px'], ['gap-1', '4px'], ['gap-1.5', '6px'],
+    ['gap-2', '8px'], ['gap-2.5', '10px'], ['gap-3', '12px'], ['gap-3.5', '14px'],
+    ['gap-4', '16px'], ['gap-5', '20px'], ['gap-6', '24px'], ['gap-7', '28px'],
+    ['gap-8', '32px'], ['gap-9', '36px'], ['gap-10', '40px'], ['gap-11', '44px'],
+    ['gap-12', '48px'], ['gap-13', '52px'], ['gap-14', '56px'], ['gap-15', '60px'],
+    ['gap-16', '64px'], ['gap-17', '68px'], ['gap-18', '72px'], ['gap-19', '76px'],
+    ['gap-20', '80px'], ['gap-21', '84px'], ['gap-22', '88px'], ['gap-23', '92px'],
+    ['gap-24', '96px'], ['gap-25', '100px'], ['gap-28', '112px'], ['gap-30', '120px'],
+    ['gap-32', '128px'], ['gap-40', '160px'], ['gap-px', '1px'],
+  ]}
+/>
+
+## Padding
+
+Same underlying scale as gap, with two extra steps confirmed beyond it (`p-36`, `p-48`):
+
+<SimpleTable
+  columns={['Token', 'Value']}
+  rows={[
+    ['p-0', '0px'], ['p-0.5', '2px'], ['p-1', '4px'], ['p-1.5', '6px'],
+    ['p-2', '8px'], ['p-2.5', '10px'], ['p-3', '12px'], ['p-3.5', '14px'],
+    ['p-4', '16px'], ['p-5', '20px'], ['p-6', '24px'], ['p-7', '28px'],
+    ['p-8', '32px'], ['p-9', '36px'], ['p-10', '40px'], ['p-11', '44px'],
+    ['p-12', '48px'], ['p-13', '52px'], ['p-14', '56px'], ['p-15', '60px'],
+    ['p-16', '64px'], ['p-17', '68px'], ['p-18', '72px'], ['p-19', '76px'],
+    ['p-20', '80px'], ['p-21', '84px'], ['p-22', '88px'], ['p-23', '92px'],
+    ['p-24', '96px'], ['p-28', '112px'], ['p-30', '120px'], ['p-32', '128px'],
+    ['p-36', '144px'], ['p-40', '160px'], ['p-48', '192px'],
   ]}
 />
 
 ## Border Radius — raw primitives
 
-Also from the `Tailwind Primitives` collection (confirmed names: `rounded-sm`, `rounded-md`, `rounded-xl` — the search likely didn't surface the full set, more steps probably exist). Values are Tailwind v4's default radius scale:
+From the `Tailwind Primitives` collection:
 
 <SimpleTable
   columns={['Token', 'Value']}
   rows={[
+    ['rounded-none', '0px'],
+    ['rounded-xs', '2px'],
     ['rounded-sm', '4px'],
     ['rounded-md', '6px'],
+    ['rounded-lg', '8px'],
     ['rounded-xl', '12px'],
+    ['rounded-2xl', '16px'],
+    ['rounded-3xl', '24px'],
+    ['rounded-4xl', '32px'],
+    ['rounded-6xl', '40px'],
+    ['rounded-full', '9999px'],
   ]}
 />
 
 ## Border Radius — semantic scale (🌗 Theme Mode)
 
-This is the layer that's actually Removery-specific: a `radius/rounded-*` scale in the `🌗 Theme Mode` collection, computed from a single base radius rather than raw Tailwind steps — the same pattern this project already uses in `src/index.css` (`--radius` as the base, `--radius-sm/md/lg/xl` derived via `calc()`).
+This is the layer that's Removery-specific in name (it lives in the theme-aware collection rather than the raw primitives one) — but confirmed values show it's currently a **direct 1:1 alias** of the raw primitives above, not an independently-tuned scale. Every value matches exactly.
 
-Confirmed **names** in Figma: `rounded-none`, `rounded-xs`, `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xl`, `rounded-2xl`, `rounded-3xl`, `rounded-4xl`, `rounded-6xl`, `rounded-full`. Their **pixel values** aren't confirmed yet (same limitation as the Typography scale — no batch lookup, needs a text/shape layer per token to inspect).
+`src/index.css` implements this with the standard shadcn single-base-variable pattern: one `--radius` value drives `sm`/`md`/`lg`/`xl` via `calc()`, so a future rebrand only requires changing one number. The base is now set to `0.5rem` (8px = `rounded-lg`), which makes the calc-derived steps land exactly on the confirmed values:
 
-This project's `src/index.css` today only defines 4 of those 11 steps:
+<SimpleTable
+  columns={['Token in index.css', 'Formula', 'Value', 'Matches Figma']}
+  rows={[
+    ['--radius (base)', '0.5rem', '8px', '✅ rounded-lg'],
+    ['--radius-sm', 'calc(var(--radius) - 4px)', '4px', '✅ rounded-sm'],
+    ['--radius-md', 'calc(var(--radius) - 2px)', '6px', '✅ rounded-md'],
+    ['--radius-lg', 'var(--radius)', '8px', '✅ rounded-lg'],
+    ['--radius-xl', 'calc(var(--radius) + 4px)', '12px', '✅ rounded-xl'],
+  ]}
+/>
+
+The remaining steps don't fit that arithmetic progression, so they're defined directly as flat values (still 100% confirmed, just not calc-derived):
 
 <SimpleTable
   columns={['Token in index.css', 'Value']}
   rows={[
-    ['--radius (base)', '0.625rem (10px)'],
-    ['--radius-sm', 'calc(var(--radius) - 4px) = 6px'],
-    ['--radius-md', 'calc(var(--radius) - 2px) = 8px'],
-    ['--radius-lg', 'var(--radius) = 10px'],
-    ['--radius-xl', 'calc(var(--radius) + 4px) = 14px'],
+    ['--radius-none', '0px'],
+    ['--radius-xs', '2px'],
+    ['--radius-2xl', '16px'],
+    ['--radius-3xl', '24px'],
+    ['--radius-4xl', '32px'],
+    ['--radius-6xl', '40px'],
+    ['--radius-full', '9999px'],
   ]}
 />
 
-`rounded-none`, `rounded-2xl`, `rounded-3xl`, `rounded-4xl`, and `rounded-6xl` exist in Figma but have no equivalent in this codebase yet — that's a real gap, not an omission in this doc.
+All 11 confirmed Figma radius steps now have a matching CSS variable — the previous version of this page only covered 4 of them.
+
+## Responsive breakpoints
+
+New section — confirmed from `tokens.json`'s **"🖥️ Responsive"** collection, not documented before:
+
+<SimpleTable
+  columns={['Token', 'Desktop', 'Tablet', 'Mobile']}
+  rows={[
+    ['container-width', '1280px', '768px', '375px'],
+    ['viewport-size', '1440px', '768px', '390px'],
+    ['container-padding', '32px', '32px', '32px'],
+    ['section-padding', '128px', '128px', '128px'],
+  ]}
+/>
+
+`container-padding` and `section-padding` are constant across breakpoints in this collection — only `container-width` and `viewport-size` actually vary by device. These aren't wired into any component yet; they exist in Figma as page-layout reference values.
 
 ## Z-index
 

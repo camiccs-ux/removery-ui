@@ -4,139 +4,172 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  ⚠️ VALORES PLACEHOLDER
-  As cores abaixo são aproximações visuais tiradas dos prints do R7 e do
-  funil público (não os valores exatos do Figma). Antes de usar em produção,
-  sincronizar com os valores reais da collection "🌗 Theme Mode" na
-  Removery Library. Os NOMES das variáveis já batem com os nomes reais
-  usados no Figma — só os valores hexadecimais precisam ser confirmados.
+  ✅ VALORES CONFIRMADOS — Figma "🌗 Theme Mode" (Removery Library)
+  Sincronizado em 2026-07-14 a partir de tokens.json, o export real da
+  collection via plugin variables2json (não são mais aproximações visuais).
+  Nomes e valores abaixo batem 1:1 com o Figma. Duas observações do export
+  que valem revisão com o time de design (não foram "corrigidas" aqui):
+
+  1. --destructive muda de intensidade entre temas: no light é um vermelho
+     bem claro (#fee2e2) com texto vermelho escuro (#991b1b) — leitura tipo
+     "badge/alert" suave; no dark é um vermelho sólido forte (#b91c1c) com
+     texto quase branco — leitura tipo "botão sólido". Mesma variável,
+     tratamento visual bem diferente por tema; confirmar se é intencional.
+  2. --primary-foreground sobre --primary dá 3.31:1 (branco sobre #009da3) —
+     passa no limiar de 3:1 para texto grande/componentes de UI, mas fica
+     abaixo do 4.5:1 exigido para texto normal em AA. Botões primary com
+     texto pequeno tecnicamente não fecham AA nesse par.
 */
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
+  --radius-none: 0;
+  --radius-xs: 0.125rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-6xl: 2.5rem;
+  --radius-full: 9999px;
 
   /* Tipografia — confirmado via Figma (get_design_context) em node
-     24263:698 (body/text-base/semibold) e 25438:265 (display/xs).
-     Archivo é carregável via Google Fonts. ABC Social Extended é fonte
-     licenciada (ABC Dinamo) — precisa dos arquivos de fonte self-hosted
-     antes de renderizar corretamente; até lá cai no fallback. */
+     24263:698 (body/text-base/semibold) e 25438:265 (display/xs), e via
+     tokens.json (Tailwind Typography). Archivo é carregável via Google
+     Fonts. ABC Social Extended é fonte licenciada (ABC Dinamo) — precisa
+     dos arquivos de fonte self-hosted antes de renderizar corretamente;
+     até lá cai no fallback. */
   --font-body-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-display-family: "ABC Social Extended", "Archivo", ui-sans-serif, system-ui, sans-serif;
 
-  --background: #FFFFFF;
-  --foreground: oklch(0.18 0.01 250);
+  --background: #ffffff;
+  --foreground: #180c04;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.01 250);
+  --card: #ffffff;
+  --card-foreground: #180c04;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.01 250);
+  --popover: #ffffff;
+  --popover-foreground: #180c04;
 
-  --primary: oklch(0.5 0.08 195);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: #009da3;
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.96 0.01 195);
-  --secondary-foreground: oklch(0.25 0.02 195);
+  --secondary: #1f2937;
+  --secondary-foreground: #ffffff;
 
-  --muted: oklch(0.96 0.005 90);
-  --muted-foreground: oklch(0.5 0.01 250);
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
 
-  --accent: oklch(0.94 0.03 195);
-  --accent-foreground: oklch(0.25 0.05 195);
+  --accent: #009da3;
+  --accent-foreground: #002729;
 
-  --destructive: oklch(0.58 0.22 27);
+  --destructive: #fee2e2;
+  --destructive-foreground: #991b1b;
 
-  --border: oklch(0.9 0.005 90);
-  --input: oklch(0.9 0.005 90);
-  --ring: oklch(0.5 0.08 195);
+  --border: #eae7dc;
+  --input: #eae7dc;
+  --ring: #009da3;
 
-  --sidebar: oklch(0.14 0.02 195);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.5 0.08 195);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.22 0.03 195);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.22 0.02 195);
-  --sidebar-ring: oklch(0.5 0.08 195);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #009da3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #111827;
+  --sidebar-accent-foreground: #f9fafb;
+  --sidebar-border: #eae7dc;
+  --sidebar-ring: #009da3;
 
-  --chart-1: oklch(0.6 0.15 195);
-  --chart-2: oklch(0.65 0.15 40);
-  --chart-3: oklch(0.6 0.15 300);
-  --chart-4: oklch(0.7 0.15 140);
-  --chart-5: oklch(0.65 0.18 20);
+  --chart-1: #ef4444;
+  --chart-2: #006e74;
+  --chart-3: #1e3a8a;
+  --chart-4: #fbbf24;
+  --chart-5: #d97706;
 
-  /* Status semantics — Schedule (calendar/appointment) */
-  --status-new: oklch(0.68 0.14 55);
-  --status-new-bg: oklch(0.93 0.05 55);
-  --status-pending: oklch(0.6 0.18 20);
-  --status-pending-bg: oklch(0.92 0.06 20);
-  --status-confirmed: oklch(0.6 0.12 145);
-  --status-confirmed-bg: oklch(0.93 0.05 145);
-  --status-checked-in: oklch(0.75 0.13 85);
-  --status-checked-in-bg: oklch(0.94 0.06 85);
-  --status-in-service: oklch(0.6 0.1 290);
-  --status-in-service-bg: oklch(0.93 0.04 290);
-  --status-noshow: oklch(0.65 0.01 250);
-  --status-noshow-bg: oklch(0.93 0.005 250);
-  --status-blocked: oklch(0.75 0.005 250);
+  /* Success — "extra colors" na Light collection, não fazia parte do
+     conjunto anterior (placeholder não tinha esse par) */
+  --success-bg: #f0fdf4;
+  --success-foreground: #166534;
+
+  /* Status semantics — Schedule (calendar/appointment)
+     Nomes renomeados para bater 1:1 com o Figma: o export usa
+     "checkedin"/"inservice" sem hífen (o código antes usava
+     "checked-in"/"in-service" — provável leitura equivocada do nome
+     durante a auditoria original). */
+  --status-new: #f98140;
+  --status-new-bg: #fff4ef;
+  --status-pending: #f43f5e;
+  --status-pending-bg: #fff1f2;
+  --status-confirmed: #84cc16;
+  --status-confirmed-bg: #f7fee7;
+  --status-checkedin: #eab308;
+  --status-checkedin-bg: #fefce8;
+  --status-inservice: #a855f7;
+  --status-inservice-bg: #faf5ff;
+  --status-noshow: #887c77;
+  --status-noshow-bg: #fcfaf3;
+  --status-blocked: #64748b;
+  --status-blocked-bg: #f1f5f9;
 }
 
 .dark {
-  --background: oklch(0.16 0.01 250);
-  --foreground: oklch(0.96 0 0);
+  --background: #2e1d11;
+  --foreground: #f9f5f2;
 
-  --card: oklch(0.2 0.01 250);
-  --card-foreground: oklch(0.96 0 0);
+  --card: #180c04;
+  --card-foreground: #f9f5f2;
 
-  --popover: oklch(0.2 0.01 250);
-  --popover-foreground: oklch(0.96 0 0);
+  --popover: #180c04;
+  --popover-foreground: #f9f5f2;
 
-  --primary: oklch(0.68 0.1 195);
-  --primary-foreground: oklch(0.14 0.02 195);
+  --primary: #009da3;
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.26 0.02 195);
-  --secondary-foreground: oklch(0.9 0 0);
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1f2937;
 
-  --muted: oklch(0.24 0.01 250);
-  --muted-foreground: oklch(0.65 0.01 250);
+  --muted: #374151;
+  --muted-foreground: #f3f4f6;
 
-  --accent: oklch(0.28 0.04 195);
-  --accent-foreground: oklch(0.9 0 0);
+  --accent: #002729;
+  --accent-foreground: #ffffff;
 
-  --destructive: oklch(0.6 0.2 27);
+  --destructive: #b91c1c;
+  --destructive-foreground: #fef2f2;
 
-  --border: oklch(0.3 0.01 250);
-  --input: oklch(0.3 0.01 250);
-  --ring: oklch(0.68 0.1 195);
+  --border: #413530;
+  --input: #5f524d;
+  --ring: #009da3;
 
-  --sidebar: oklch(0.1 0.01 250);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.68 0.1 195);
-  --sidebar-primary-foreground: oklch(0.14 0.02 195);
-  --sidebar-accent: oklch(0.2 0.02 195);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.28 0.01 250);
-  --sidebar-ring: oklch(0.68 0.1 195);
+  --sidebar: #111827;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #006e74;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #192132;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #ffffff;
+  --sidebar-ring: #009da3;
 
-  --chart-1: oklch(0.65 0.15 195);
-  --chart-2: oklch(0.68 0.15 40);
-  --chart-3: oklch(0.65 0.15 300);
-  --chart-4: oklch(0.72 0.15 140);
-  --chart-5: oklch(0.68 0.18 20);
+  --chart-1: #2563eb;
+  --chart-2: #4ade80;
+  --chart-3: #f59e0b;
+  --chart-4: #8b5cf6;
+  --chart-5: #e11d48;
 
-  --status-new: oklch(0.72 0.14 55);
-  --status-new-bg: oklch(0.3 0.05 55);
-  --status-pending: oklch(0.68 0.18 20);
-  --status-pending-bg: oklch(0.3 0.06 20);
-  --status-confirmed: oklch(0.68 0.12 145);
-  --status-confirmed-bg: oklch(0.28 0.05 145);
-  --status-checked-in: oklch(0.78 0.13 85);
-  --status-checked-in-bg: oklch(0.3 0.06 85);
-  --status-in-service: oklch(0.68 0.1 290);
-  --status-in-service-bg: oklch(0.28 0.04 290);
-  --status-noshow: oklch(0.55 0.01 250);
-  --status-noshow-bg: oklch(0.26 0.005 250);
-  --status-blocked: oklch(0.4 0.005 250);
+  --success-bg: #15803d;
+  --success-foreground: #f0fdf4;
+
+  --status-new: #f98140;
+  --status-new-bg: #a03600;
+  --status-pending: #e11d48;
+  --status-pending-bg: #9f1239;
+  --status-confirmed: #84cc16;
+  --status-confirmed-bg: #4d7c0f;
+  --status-checkedin: #facc15;
+  --status-checkedin-bg: #713f12;
+  --status-inservice: #9333ea;
+  --status-inservice-bg: #6b21a8;
+  --status-noshow: #b2aaa2;
+  --status-noshow-bg: #5f524d;
+  --status-blocked: #94a3b8;
+  --status-blocked-bg: #475569;
 }
 
 @theme inline {
@@ -155,9 +188,13 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-success-bg: var(--success-bg);
+  --color-success-foreground: var(--success-foreground);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -180,14 +217,20 @@
   --color-status-pending-bg: var(--status-pending-bg);
   --color-status-confirmed: var(--status-confirmed);
   --color-status-confirmed-bg: var(--status-confirmed-bg);
-  --color-status-checked-in: var(--status-checked-in);
-  --color-status-checked-in-bg: var(--status-checked-in-bg);
-  --color-status-in-service: var(--status-in-service);
-  --color-status-in-service-bg: var(--status-in-service-bg);
+  --color-status-checkedin: var(--status-checkedin);
+  --color-status-checkedin-bg: var(--status-checkedin-bg);
+  --color-status-inservice: var(--status-inservice);
+  --color-status-inservice-bg: var(--status-inservice-bg);
   --color-status-noshow: var(--status-noshow);
   --color-status-noshow-bg: var(--status-noshow-bg);
   --color-status-blocked: var(--status-blocked);
+  --color-status-blocked-bg: var(--status-blocked-bg);
 
+  /* Radius — base = rounded-lg (8px), confirmado no Figma (Tailwind
+     Primitives + 🌗 Theme Mode/radius, os dois batem 1:1). sm/md/lg/xl
+     seguem a fórmula de derivação do shadcn a partir de --radius; os
+     passos extras (none/xs/2xl/3xl/4xl/6xl/full) são valores diretos,
+     também confirmados, porque não seguem a mesma progressão aritmética. */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
