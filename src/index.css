@@ -23,7 +23,7 @@
   --font-body-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-display-family: "ABC Social Extended", "Archivo", ui-sans-serif, system-ui, sans-serif;
 
-  --background: oklch(0.99 0.005 90);
+  --background: #FFFFFF;
   --foreground: oklch(0.18 0.01 250);
 
   --card: oklch(1 0 0);
