@@ -69,12 +69,13 @@ export const ColorTable = ({ columns, rows }) => (
 
 # Colors
 
-Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Both names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations). Light and dark values are both included below; toggle the Storybook theme switcher to preview.
+Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations) — except one flagged value below, which is ⚠️ **inferred** pending a design fix. Light and dark values are both included below; toggle the Storybook theme switcher to preview. Re-synced 2026-07-16 — see notes below on what changed.
 
 <div style={noteStyle}>
-  <strong>Two things worth a design-team look</strong> (documented, not silently changed):
-  <br />1. <code style={codeStyle}>destructive</code> is a soft pale-red-on-dark-red pairing in light mode (badge/alert style) but a solid strong-red-on-white pairing in dark mode (solid-button style) — same token, different visual weight per theme.
+  <strong>Three things worth a design-team look</strong> (documented, not silently changed):
+  <br />1. <code style={codeStyle}>destructive</code> is now a solid red-on-near-white pairing in **both** themes (#b91c1c/#ffffff light, #7f1d1d/#fef2f2 dark) — the previous soft pale-red-on-dark-red treatment in light mode is gone as of this sync; same token, now consistent visual weight across themes.
   <br />2. <code style={codeStyle}>primary-foreground</code> on <code style={codeStyle}>primary</code> is 3.31:1 in both themes — clears the 3:1 threshold for large text/UI components, but falls short of the 4.5:1 AA requirement for normal-size text.
+  <br />3. ⚠️ <strong>Not fully Figma-confirmed:</strong> the 2026-07-16 export sets dark-mode <code style={codeStyle}>accent</code> to <code style={codeStyle}>#ffffff</code> and dark-mode <code style={codeStyle}>accent-foreground</code> to <code style={codeStyle}>#ffffff</code> as well — identical values, 0:1 contrast, almost certainly an export error rather than an intentional design change. <code style={codeStyle}>accent</code> (<code style={codeStyle}>#ffffff</code>) is applied as confirmed; <code style={codeStyle}>accent-foreground</code> in dark mode is a placeholder (<code style={codeStyle}>#002729</code>, reused from the light-mode value) until design corrects the Figma variable.
 </div>
 
 ## Base
@@ -93,11 +94,11 @@ Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Both n
     { token: 'secondary-foreground', varName: '--secondary-foreground', hex: '#ffffff / #1f2937', usage: 'Text on secondary (14.68:1 light, 13.34:1 dark — AAA)' },
     { token: 'muted', varName: '--muted', hex: '#f3f4f6 / #374151', usage: 'Neutral surfaces, table backgrounds' },
     { token: 'muted-foreground', varName: '--muted-foreground', hex: '#6b7280 / #f3f4f6', usage: 'Secondary text (4.39:1 light, 9.37:1 dark — AA/AAA)' },
-    { token: 'accent', varName: '--accent', hex: '#009da3 / #002729', usage: 'Highlights, hover states (same value as primary in light mode)' },
-    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002729 / #ffffff', usage: 'Text on accent (4.80:1 light, 15.88:1 dark — AA/AAA)' },
-    { token: 'destructive', varName: '--destructive', hex: '#fee2e2 / #b91c1c', usage: 'Destructive actions, errors — see note above on light/dark asymmetry' },
-    { token: 'destructive-foreground', varName: '--destructive-foreground', hex: '#991b1b / #fef2f2', usage: 'Text on destructive (6.80:1 light, 5.91:1 dark — AA)' },
-    { token: 'border / input', varName: '--border', hex: '#eae7dc / #413530', usage: 'Borders, dividers, input outlines' },
+    { token: 'accent', varName: '--accent', hex: '#e1f0f1 / #ffffff', usage: 'Highlights, hover states (light is a pale teal tint; dark is ✅ Figma-confirmed as of 2026-07-16, no longer the dark teal it used to be)' },
+    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002729 / #002729 ⚠️ inferred', usage: 'Text on accent (13.56:1 light, 15.88:1 dark — AAA both). Dark value is NOT Figma-confirmed: tokens.json lists dark accent-foreground as #ffffff, identical to the new #ffffff accent background (0:1 contrast) — almost certainly an export error. Placeholder reuses the light-mode value until design fixes the variable.' },
+    { token: 'destructive', varName: '--destructive', hex: '#b91c1c / #7f1d1d', usage: 'Destructive actions, errors — solid red in both themes as of this sync, see note above' },
+    { token: 'destructive-foreground', varName: '--destructive-foreground', hex: '#ffffff / #fef2f2', usage: 'Text on destructive (6.47:1 light, 9.16:1 dark — AA/AAA)' },
+    { token: 'border / input', varName: '--border', hex: '#eae7dc / #374151', usage: 'Borders, dividers, input outlines' },
     { token: 'ring', varName: '--ring', hex: '#009da3 / #009da3', usage: 'Focus ring (same value as primary)' },
   ]}
 />
@@ -107,8 +108,8 @@ Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Both n
 <ColorTable
   columns={['Token', 'Swatch', 'Hex (Light / Dark)', 'Usage']}
   rows={[
-    { token: 'sidebar', varName: '--sidebar', hex: '#ffffff / #111827', usage: 'Sidebar background — light mode keeps it white, unlike the previous placeholder which assumed always-dark' },
-    { token: 'sidebar-foreground', varName: '--sidebar-foreground', hex: '#111827 / #ffffff', usage: 'Text on sidebar (17.74:1 both themes — AAA)' },
+    { token: 'sidebar', varName: '--sidebar', hex: '#ffffff / #0f172a', usage: 'Sidebar background — light mode keeps it white, unlike the previous placeholder which assumed always-dark' },
+    { token: 'sidebar-foreground', varName: '--sidebar-foreground', hex: '#111827 / #ffffff', usage: 'Text on sidebar (17.74:1 light, 17.85:1 dark — AAA both)' },
     { token: 'sidebar-primary', varName: '--sidebar-primary', hex: '#009da3 / #006e74', usage: 'Active item / emphasis within the sidebar' },
     { token: 'sidebar-primary-foreground', varName: '--sidebar-primary-foreground', hex: '#ffffff / #ffffff', usage: 'Text on sidebar-primary (3.31:1 light, 6.03:1 dark)' },
     { token: 'sidebar-accent', varName: '--sidebar-accent', hex: '#111827 / #192132', usage: 'Hover / selected state on menu items' },
@@ -125,18 +126,18 @@ Semantic tokens for appointment status, from the same `🌗 Theme Mode` collecti
 <ColorTable
   columns={['Token', 'Swatch', 'Hex (text)', 'Contrast (Light / Dark)', 'Usage']}
   rows={[
-    { token: 'status-new', varName: '--status-new', hex: '#f98140', contrast: '2.36:1 ⚠️ / 2.73:1 ⚠️ — both below 3:1', usage: 'Newly created appointment' },
-    { token: 'status-pending', varName: '--status-pending', hex: '#f43f5e (light) / #e11d48 (dark)', contrast: '3.34:1 (AA large) / 1.71:1 ⚠️ below 3:1', usage: 'Awaiting confirmation' },
-    { token: 'status-confirmed', varName: '--status-confirmed', hex: '#84cc16', contrast: '1.91:1 ⚠️ / 2.53:1 ⚠️ — both below 3:1', usage: 'Confirmed by client' },
-    { token: 'status-checkedin', varName: '--status-checkedin', hex: '#eab308 (light) / #facc15 (dark)', contrast: '1.85:1 ⚠️ below 3:1 / 5.66:1 (AA)', usage: 'Client checked in at studio' },
-    { token: 'status-inservice', varName: '--status-inservice', hex: '#a855f7 (light) / #9333ea (dark)', contrast: '3.69:1 (AA large) / 1.62:1 ⚠️ below 3:1', usage: 'Session in progress' },
-    { token: 'status-noshow', varName: '--status-noshow', hex: '#887c77 (light) / #b2aaa2 (dark)', contrast: '3.87:1 (AA large) / 3.27:1 (AA large)', usage: 'Client did not show up' },
-    { token: 'status-blocked', varName: '--status-blocked', hex: '#64748b (light) / #94a3b8 (dark)', contrast: '4.34:1 (AA) / 2.96:1 ⚠️ just below 3:1', usage: 'Blocked time slot' },
+    { token: 'status-new', varName: '--status-new', hex: '#a03600 (light) / #f98140 (dark)', contrast: '5.87:1 (AA) / 7.38:1 (AAA)', usage: 'Newly created appointment' },
+    { token: 'status-pending', varName: '--status-pending', hex: '#be123c (light) / #fb7185 (dark)', contrast: '5.15:1 (AA) / 5.81:1 (AA)', usage: 'Awaiting confirmation' },
+    { token: 'status-confirmed', varName: '--status-confirmed', hex: '#16a34a (light) / #84cc16 (dark)', contrast: '3.15:1 (AA large only) / 7.55:1 (AAA)', usage: 'Confirmed by client' },
+    { token: 'status-checkedin', varName: '--status-checkedin', hex: '#a16207 (light) / #facc15 (dark)', contrast: '4.58:1 (AA) / 9.52:1 (AAA)', usage: 'Client checked in at studio' },
+    { token: 'status-inservice', varName: '--status-inservice', hex: '#9333ea (light) / #c084fc (dark)', contrast: '4.56:1 (AA) / 5.68:1 (AA)', usage: 'Session in progress' },
+    { token: 'status-noshow', varName: '--status-noshow', hex: '#5f524d (light) / #eae7dc (dark)', contrast: '6.06:1 (AA) / 8.19:1 (AAA)', usage: 'Client did not show up' },
+    { token: 'status-blocked', varName: '--status-blocked', hex: '#475569 (light) / #cbd5e1 (dark)', contrast: '6.92:1 (AA) / 9.85:1 (AAA)', usage: 'Blocked time slot' },
   ]}
 />
 
 <div style={noteStyle}>
-  Now that real values are confirmed, most status pairings still don't reach even the 3:1 large-text/UI threshold in at least one theme — this isn't a placeholder artifact anymore, it's the actual Figma-confirmed palette. Worth flagging to design: several status colors (<code style={codeStyle}>status-new</code>, <code style={codeStyle}>status-confirmed</code>, and either the light or dark variant of most others) will need a luminosity adjustment to pass AA reliably. See Foundations → Accessibility for the full table.
+  As of this sync, status contrast improved dramatically — every pairing now clears the 3:1 large-text/UI threshold in both themes, and all but one clear the stricter 4.5:1 AA normal-text threshold. The one exception: <code style={codeStyle}>status-confirmed</code> in light mode sits at 3.15:1 — passes for large text/UI components, but not for normal-size text. See Foundations → Accessibility for the full table.
 </div>
 
 ## Success
@@ -170,11 +171,11 @@ New pair confirmed in Figma's "extra colors" group — not present in the previo
 
 ## About hover
 
-There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). In light mode `accent` is identical to `primary` (`#009da3`), so hover states read as the brand color at full strength; in dark mode `accent` is a distinct dark teal (`#002729`).
+There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). `accent` is a pale teal tint in light mode (`#e1f0f1`) — it no longer matches `primary` (`#009da3`). As of the 2026-07-16 sync, dark mode `accent` changed to `#ffffff` (previously a dark teal, `#002729`) — see the ⚠️ note on `accent-foreground` above, since the tokens.json export currently makes this pairing unreadable as shipped.
 
 ## Not synced
 
 Two things from `tokens.json` intentionally **not** brought into this file:
 
 - **`🖼️ Theme` collection** (default/amber brand variants) — per earlier direction, this collection isn't published/active and shouldn't be used.
-- **"opacity colors"** group inside `🌗 Theme Mode` — values here (e.g. a `primary-10` entry of `#171717`) don't correlate with the real `primary` (`#009da3`), which suggests unused generic scaffold data left over in the file rather than real design tokens. Flagged here rather than synced silently; let me know if design confirms these should be used for anything.
+- **"opacity colors"** group inside `🌗 Theme Mode` — as of this sync, entries like `primary-10`/`primary-30`/`primary-80` now correlate with the real `primary` (`#009da3`), but the export still has no actual alpha channel (every step is the same flat hex, e.g. `background-10`/`background-20`/`background-30`/`background-40` are all `#ffffff` in light mode) — so there's no real opacity scale to sync yet, just same-color duplicates under different names. Flagged here rather than synced silently; let me know if design intends these to carry actual alpha values.

@@ -5,20 +5,28 @@
 
 /*
   ✅ VALORES CONFIRMADOS — Figma "🌗 Theme Mode" (Removery Library)
-  Sincronizado em 2026-07-14 a partir de tokens.json, o export real da
+  Re-sincronizado em 2026-07-15 a partir de tokens.json, o export real da
   collection via plugin variables2json (não são mais aproximações visuais).
-  Nomes e valores abaixo batem 1:1 com o Figma. Duas observações do export
-  que valem revisão com o time de design (não foram "corrigidas" aqui):
+  Nomes e valores abaixo batem 1:1 com o Figma. Mudanças notáveis desde o
+  último sync (2026-07-14):
 
-  1. --destructive muda de intensidade entre temas: no light é um vermelho
-     bem claro (#fee2e2) com texto vermelho escuro (#991b1b) — leitura tipo
-     "badge/alert" suave; no dark é um vermelho sólido forte (#b91c1c) com
-     texto quase branco — leitura tipo "botão sólido". Mesma variável,
-     tratamento visual bem diferente por tema; confirmar se é intencional.
-  2. --primary-foreground sobre --primary dá 3.31:1 (branco sobre #009da3) —
-     passa no limiar de 3:1 para texto grande/componentes de UI, mas fica
-     abaixo do 4.5:1 exigido para texto normal em AA. Botões primary com
-     texto pequeno tecnicamente não fecham AA nesse par.
+  1. --destructive deixou de ser assimétrico entre temas: agora é um
+     vermelho sólido nos dois temas (#b91c1c light / #7f1d1d dark) com
+     foreground quase branco nos dois — a leitura "badge suave" que existia
+     no light mode não existe mais.
+  2. --accent deixou de ser idêntico a --primary no light mode: agora é um
+     tom claro de teal (#e1f0f1), distinto do primary (#009da3). Hover
+     states via `hover:bg-accent` não lêem mais como "brand color a toda
+     força" no light mode.
+  3. --background/--card no dark mode agora são o mesmo valor (#0f172a) —
+     antes eram distintos (#2e1d11 / #180c04).
+  4. Os tokens --status-* tiveram contraste bastante melhorado: quase todos
+     os pares texto/bg agora passam de 3:1 (a maioria passa 4.5:1 AA normal
+     text); só --status-confirmed no light mode fica abaixo de 4.5:1 (ver
+     Foundations → Colors/Accessibility para os números).
+  5. --primary-foreground sobre --primary continua em 3.31:1 (branco sobre
+     #009da3) — passa no limiar de 3:1 para texto grande/componentes de UI,
+     mas fica abaixo do 4.5:1 exigido para texto normal em AA.
 */
 
 :root {
@@ -47,7 +55,7 @@
   --card-foreground: #180c04;
 
   --popover: #ffffff;
-  --popover-foreground: #180c04;
+  --popover-foreground: #0f172a;
 
   --primary: #009da3;
   --primary-foreground: #ffffff;
@@ -58,11 +66,11 @@
   --muted: #f3f4f6;
   --muted-foreground: #6b7280;
 
-  --accent: #009da3;
+  --accent: #e1f0f1;
   --accent-foreground: #002729;
 
-  --destructive: #fee2e2;
-  --destructive-foreground: #991b1b;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
 
   --border: #eae7dc;
   --input: #eae7dc;
@@ -93,31 +101,31 @@
      "checkedin"/"inservice" sem hífen (o código antes usava
      "checked-in"/"in-service" — provável leitura equivocada do nome
      durante a auditoria original). */
-  --status-new: #f98140;
-  --status-new-bg: #fff4ef;
-  --status-pending: #f43f5e;
-  --status-pending-bg: #fff1f2;
-  --status-confirmed: #84cc16;
-  --status-confirmed-bg: #f7fee7;
-  --status-checkedin: #eab308;
-  --status-checkedin-bg: #fefce8;
-  --status-inservice: #a855f7;
-  --status-inservice-bg: #faf5ff;
-  --status-noshow: #887c77;
-  --status-noshow-bg: #fcfaf3;
-  --status-blocked: #64748b;
+  --status-new: #a03600;
+  --status-new-bg: #fce8df;
+  --status-pending: #be123c;
+  --status-pending-bg: #fee2e2;
+  --status-confirmed: #16a34a;
+  --status-confirmed-bg: #f0fdf4;
+  --status-checkedin: #a16207;
+  --status-checkedin-bg: #fef9c3;
+  --status-inservice: #9333ea;
+  --status-inservice-bg: #f3e8ff;
+  --status-noshow: #5f524d;
+  --status-noshow-bg: #eae7dc;
+  --status-blocked: #475569;
   --status-blocked-bg: #f1f5f9;
 }
 
 .dark {
-  --background: #2e1d11;
+  --background: #0f172a;
   --foreground: #f9f5f2;
 
-  --card: #180c04;
+  --card: #0f172a;
   --card-foreground: #f9f5f2;
 
   --popover: #180c04;
-  --popover-foreground: #f9f5f2;
+  --popover-foreground: #f9fafb;
 
   --primary: #009da3;
   --primary-foreground: #ffffff;
@@ -128,17 +136,26 @@
   --muted: #374151;
   --muted-foreground: #f3f4f6;
 
-  --accent: #002729;
-  --accent-foreground: #ffffff;
+  /* ⚠️ --accent confirmado no tokens.json (2026-07-16) como #ffffff — mas
+     o export também traz --accent-foreground como #ffffff no dark mode,
+     o que deixaria texto branco sobre fundo branco (0 contraste). Isso tem
+     cara de erro no export do Figma, não decisão de design. Combinado com
+     o time: aplicar o --accent confirmado, mas usar #002729 (o mesmo valor
+     já confirmado para accent-foreground no LIGHT mode) aqui como
+     placeholder legível — este --accent-foreground específico NÃO é
+     Figma-confirmado, é inferido, até o time de design corrigir a variável
+     na collection. */
+  --accent: #ffffff;
+  --accent-foreground: #002729;
 
-  --destructive: #b91c1c;
+  --destructive: #7f1d1d;
   --destructive-foreground: #fef2f2;
 
-  --border: #413530;
+  --border: #374151;
   --input: #5f524d;
   --ring: #009da3;
 
-  --sidebar: #111827;
+  --sidebar: #0f172a;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #006e74;
   --sidebar-primary-foreground: #ffffff;
@@ -157,19 +174,19 @@
   --success-foreground: #f0fdf4;
 
   --status-new: #f98140;
-  --status-new-bg: #a03600;
-  --status-pending: #e11d48;
-  --status-pending-bg: #9f1239;
+  --status-new-bg: #2e0000;
+  --status-pending: #fb7185;
+  --status-pending-bg: #4c0519;
   --status-confirmed: #84cc16;
-  --status-confirmed-bg: #4d7c0f;
+  --status-confirmed-bg: #052e16;
   --status-checkedin: #facc15;
-  --status-checkedin-bg: #713f12;
-  --status-inservice: #9333ea;
-  --status-inservice-bg: #6b21a8;
-  --status-noshow: #b2aaa2;
-  --status-noshow-bg: #5f524d;
-  --status-blocked: #94a3b8;
-  --status-blocked-bg: #475569;
+  --status-checkedin-bg: #422006;
+  --status-inservice: #c084fc;
+  --status-inservice-bg: #3b0764;
+  --status-noshow: #eae7dc;
+  --status-noshow-bg: #4b3f3a;
+  --status-blocked: #cbd5e1;
+  --status-blocked-bg: #1e293b;
 }
 
 @theme inline {

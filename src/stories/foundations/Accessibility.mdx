@@ -38,33 +38,33 @@ All text/background pairings must meet minimum contrast ratios:
 
 ## Verified Pairings
 
-Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values in `src/index.css`, synced from `tokens.json` (the `variables2json` export of the Removery Library's `🌗 Theme Mode` collection). Light and dark are listed separately since several pairings differ meaningfully between themes.
+Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values in `src/index.css`, synced from `tokens.json` (the `variables2json` export of the Removery Library's `🌗 Theme Mode` collection) — except where flagged ⚠️ **inferred**. Re-synced 2026-07-16. Light and dark are listed separately since several pairings differ meaningfully between themes.
 
 <SimpleTable
   columns={['Pairing', 'Light', 'Dark', 'Status']}
   rows={[
-    ['Foreground on Background', '19.21:1', '14.90:1', 'AAA both'],
-    ['Card Foreground on Card', '19.21:1', '17.72:1', 'AAA both'],
+    ['Foreground on Background', '19.21:1', '16.47:1', 'AAA both'],
+    ['Card Foreground on Card', '19.21:1', '16.47:1', 'AAA both'],
     ['Primary Foreground on Primary', '3.31:1', '3.31:1', 'AA large text/UI only — fails normal-text AA (4.5:1)'],
     ['Secondary Foreground on Secondary', '14.68:1', '13.34:1', 'AAA both'],
     ['Muted Foreground on Muted', '4.39:1', '9.37:1', 'AA / AAA'],
-    ['Muted Foreground on Background', '4.83:1', '14.68:1', 'AA / AAA'],
-    ['Accent Foreground on Accent', '4.80:1', '15.88:1', 'AA / AAA'],
-    ['Destructive Foreground on Destructive', '6.80:1', '5.91:1', 'AA both'],
-    ['Sidebar Foreground on Sidebar', '17.74:1', '17.74:1', 'AAA both'],
+    ['Muted Foreground on Background', '4.83:1', '16.22:1', 'AA / AAA'],
+    ['Accent Foreground on Accent', '13.56:1', '15.88:1 ⚠️ inferred', 'AAA both — dark relies on a placeholder accent-foreground, see Colors page'],
+    ['Destructive Foreground on Destructive', '6.47:1', '9.16:1', 'AA / AAA'],
+    ['Sidebar Foreground on Sidebar', '17.74:1', '17.85:1', 'AAA both'],
     ['Sidebar Primary Foreground on Sidebar Primary', '3.31:1', '6.03:1', 'AA large / AA'],
     ['Sidebar Accent Foreground on Sidebar Accent', '16.98:1', '16.09:1', 'AAA both'],
-    ['status-confirmed on status-confirmed-bg', '1.91:1', '2.53:1', '⚠️ fails 3:1 in both themes'],
-    ['status-new on status-new-bg', '2.36:1', '2.73:1', '⚠️ fails 3:1 in both themes'],
-    ['status-pending on status-pending-bg', '3.34:1', '1.71:1', 'AA large (light) / ⚠️ fails 3:1 (dark)'],
-    ['status-checkedin on status-checkedin-bg', '1.85:1', '5.66:1', '⚠️ fails 3:1 (light) / AA (dark)'],
-    ['status-inservice on status-inservice-bg', '3.69:1', '1.62:1', 'AA large (light) / ⚠️ fails 3:1 (dark)'],
-    ['status-noshow on status-noshow-bg', '3.87:1', '3.27:1', 'AA large both'],
-    ['status-blocked on status-blocked-bg', '4.34:1', '2.96:1', 'AA (light) / ⚠️ just below 3:1 (dark)'],
+    ['status-confirmed on status-confirmed-bg', '3.15:1', '7.55:1', 'AA large only (light) / AAA (dark)'],
+    ['status-new on status-new-bg', '5.87:1', '7.38:1', 'AA / AAA'],
+    ['status-pending on status-pending-bg', '5.15:1', '5.81:1', 'AA both'],
+    ['status-checkedin on status-checkedin-bg', '4.58:1', '9.52:1', 'AA / AAA'],
+    ['status-inservice on status-inservice-bg', '4.56:1', '5.68:1', 'AA both'],
+    ['status-noshow on status-noshow-bg', '6.06:1', '8.19:1', 'AA / AAA'],
+    ['status-blocked on status-blocked-bg', '6.92:1', '9.85:1', 'AA / AAA'],
   ]}
 />
 
-Now that these are real confirmed values (not placeholders), the pattern is clear: most status tokens pass comfortably in one theme but fail the 3:1 UI-component threshold in the other. Only `status-noshow` clears large-text AA in both light and dark. This is worth raising with design as a concrete follow-up — it's not something to silently patch here since the fix is a color decision, not a code one.
+As of the 2026-07-15 re-sync, status token contrast improved dramatically across the board — every pairing now clears the 3:1 UI-component threshold in both themes, and all but one clear the stricter 4.5:1 AA normal-text threshold too. The one holdout: `status-confirmed` in light mode sits at 3.15:1, which is fine for large text/UI components but not for normal-size text — worth a follow-up with design if that token is ever used for small body text.
 
 ## Keyboard Navigation
 
@@ -126,7 +126,7 @@ The system respects `prefers-reduced-motion`, added globally in `src/index.css`:
 
 Before shipping any new component or page:
 
-- Verify color contrast with a tool (e.g., axe DevTools, Lighthouse) — especially for status badges, where several tokens fail 3:1 in one theme (see table above)
+- Verify color contrast with a tool (e.g., axe DevTools, Lighthouse) — status badges now clear 3:1 in both themes as of the 2026-07-15 sync, but `status-confirmed` in light mode still falls short of normal-text AA (see table above)
 - Navigate the entire flow using only a keyboard
 - Test with a screen reader (VoiceOver, NVDA)
 - Confirm `prefers-reduced-motion` is respected
