@@ -67,6 +67,37 @@ export const ColorTable = ({ columns, rows }) => (
   </table>
 )
 
+export const StatusColorTable = ({ rows }) => (
+  <table style={tableStyle}>
+    <thead>
+      <tr>
+        <th style={thStyle}>Token</th>
+        <th style={thStyle}>Light Mode</th>
+        <th style={thStyle}>Dark Mode</th>
+        <th style={thStyle}>Hex (Light / Dark)</th>
+        <th style={thStyle}>Contrast (Light / Dark)</th>
+        <th style={thStyle}>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>
+          <td style={tdStyle}>{r.token}</td>
+          <td style={tdStyle}>
+            <Swatch hex={r.light} />
+          </td>
+          <td style={tdStyle}>
+            <Swatch hex={r.dark} />
+          </td>
+          <td style={{ ...tdStyle, fontFamily: 'monospace' }}>{r.light} / {r.dark}</td>
+          <td style={tdStyle}>{r.contrast || '—'}</td>
+          <td style={tdStyle}>{r.usage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+
 # Colors
 
 Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations) — except dark-mode `accent`/`accent-foreground`, flagged below, which were corrected by direct design direction rather than the (broken) export value. Light and dark values are both included below; toggle the Storybook theme switcher to preview. Re-synced 2026-07-16 — see notes below on what changed.
@@ -123,16 +154,22 @@ Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names 
 
 Semantic tokens for appointment status, from the same `🌗 Theme Mode` collection. **Renamed from the original codebase**: Figma's real variable names are `status-checkedin` / `status-inservice` (no hyphen) — the previous code used `status-checked-in` / `status-in-service`, likely a misread during the original audit. Renamed throughout `index.css`, `badge.tsx`, and stories to match Figma exactly. The contrast column compares the text color (`status-*`) against its own background (`status-*-bg`), as used in the `Badge` component.
 
-<ColorTable
-  columns={['Token', 'Swatch', 'Hex (text)', 'Contrast (Light / Dark)', 'Usage']}
+<StatusColorTable
   rows={[
-    { token: 'status-new', varName: '--status-new', hex: '#a03600 (light) / #f98140 (dark)', contrast: '5.87:1 (AA) / 7.38:1 (AAA)', usage: 'Newly created appointment' },
-    { token: 'status-pending', varName: '--status-pending', hex: '#be123c (light) / #fb7185 (dark)', contrast: '5.15:1 (AA) / 5.81:1 (AA)', usage: 'Awaiting confirmation' },
-    { token: 'status-confirmed', varName: '--status-confirmed', hex: '#16a34a (light) / #84cc16 (dark)', contrast: '3.15:1 (AA large only) / 7.55:1 (AAA)', usage: 'Confirmed by client' },
-    { token: 'status-checkedin', varName: '--status-checkedin', hex: '#a16207 (light) / #facc15 (dark)', contrast: '4.58:1 (AA) / 9.52:1 (AAA)', usage: 'Client checked in at studio' },
-    { token: 'status-inservice', varName: '--status-inservice', hex: '#9333ea (light) / #c084fc (dark)', contrast: '4.56:1 (AA) / 5.68:1 (AA)', usage: 'Session in progress' },
-    { token: 'status-noshow', varName: '--status-noshow', hex: '#5f524d (light) / #eae7dc (dark)', contrast: '6.06:1 (AA) / 8.19:1 (AAA)', usage: 'Client did not show up' },
-    { token: 'status-blocked', varName: '--status-blocked', hex: '#475569 (light) / #cbd5e1 (dark)', contrast: '6.92:1 (AA) / 9.85:1 (AAA)', usage: 'Blocked time slot' },
+    { token: 'status-new', light: '#a03600', dark: '#f98140', contrast: '5.87:1 (AA) / 7.38:1 (AAA)', usage: 'Newly created appointment — text color' },
+    { token: 'status-new-bg', light: '#fce8df', dark: '#2e0000', usage: 'Newly created appointment — badge background' },
+    { token: 'status-pending', light: '#be123c', dark: '#fb7185', contrast: '5.15:1 (AA) / 5.81:1 (AA)', usage: 'Awaiting confirmation — text color' },
+    { token: 'status-pending-bg', light: '#fee2e2', dark: '#4c0519', usage: 'Awaiting confirmation — badge background' },
+    { token: 'status-confirmed', light: '#16a34a', dark: '#84cc16', contrast: '3.15:1 (AA large only) / 7.55:1 (AAA)', usage: 'Confirmed by client — text color' },
+    { token: 'status-confirmed-bg', light: '#f0fdf4', dark: '#052e16', usage: 'Confirmed by client — badge background' },
+    { token: 'status-checkedin', light: '#a16207', dark: '#facc15', contrast: '4.58:1 (AA) / 9.52:1 (AAA)', usage: 'Client checked in at studio — text color' },
+    { token: 'status-checkedin-bg', light: '#fef9c3', dark: '#422006', usage: 'Client checked in at studio — badge background' },
+    { token: 'status-inservice', light: '#9333ea', dark: '#c084fc', contrast: '4.56:1 (AA) / 5.68:1 (AA)', usage: 'Session in progress — text color' },
+    { token: 'status-inservice-bg', light: '#f3e8ff', dark: '#3b0764', usage: 'Session in progress — badge background' },
+    { token: 'status-noshow', light: '#5f524d', dark: '#eae7dc', contrast: '6.06:1 (AA) / 8.19:1 (AAA)', usage: 'Client did not show up — text color' },
+    { token: 'status-noshow-bg', light: '#eae7dc', dark: '#4b3f3a', usage: 'Client did not show up — badge background' },
+    { token: 'status-blocked', light: '#475569', dark: '#cbd5e1', contrast: '6.92:1 (AA) / 9.85:1 (AAA)', usage: 'Blocked time slot — text color' },
+    { token: 'status-blocked-bg', light: '#f1f5f9', dark: '#1e293b', usage: 'Blocked time slot — badge background' },
   ]}
 />
 
