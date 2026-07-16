@@ -38,7 +38,7 @@ All text/background pairings must meet minimum contrast ratios:
 
 ## Verified Pairings
 
-Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values in `src/index.css`, synced from `tokens.json` (the `variables2json` export of the Removery Library's `🌗 Theme Mode` collection) — except where flagged ⚠️ **inferred**. Re-synced 2026-07-16. Light and dark are listed separately since several pairings differ meaningfully between themes.
+Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values in `src/index.css`, synced from `tokens.json` (the `variables2json` export of the Removery Library's `🌗 Theme Mode` collection) — except dark-mode accent, flagged below, which is a design-direction override rather than the current tokens.json export. Re-synced 2026-07-16. Light and dark are listed separately since several pairings differ meaningfully between themes.
 
 <SimpleTable
   columns={['Pairing', 'Light', 'Dark', 'Status']}
@@ -49,7 +49,7 @@ Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values
     ['Secondary Foreground on Secondary', '14.68:1', '13.34:1', 'AAA both'],
     ['Muted Foreground on Muted', '4.39:1', '9.37:1', 'AA / AAA'],
     ['Muted Foreground on Background', '4.83:1', '16.22:1', 'AA / AAA'],
-    ['Accent Foreground on Accent', '13.56:1', '15.88:1 ⚠️ inferred', 'AAA both — dark relies on a placeholder accent-foreground, see Colors page'],
+    ['Accent Foreground on Accent', '13.56:1', '14.68:1 (design override)', 'AAA both — dark value (#1f2937/#ffffff) is a design-direction override, not from tokens.json, see Colors page'],
     ['Destructive Foreground on Destructive', '6.47:1', '9.16:1', 'AA / AAA'],
     ['Sidebar Foreground on Sidebar', '17.74:1', '17.85:1', 'AAA both'],
     ['Sidebar Primary Foreground on Sidebar Primary', '3.31:1', '6.03:1', 'AA large / AA'],

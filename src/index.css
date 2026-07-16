@@ -136,17 +136,12 @@
   --muted: #374151;
   --muted-foreground: #f3f4f6;
 
-  /* ⚠️ --accent confirmado no tokens.json (2026-07-16) como #ffffff — mas
-     o export também traz --accent-foreground como #ffffff no dark mode,
-     o que deixaria texto branco sobre fundo branco (0 contraste). Isso tem
-     cara de erro no export do Figma, não decisão de design. Combinado com
-     o time: aplicar o --accent confirmado, mas usar #002729 (o mesmo valor
-     já confirmado para accent-foreground no LIGHT mode) aqui como
-     placeholder legível — este --accent-foreground específico NÃO é
-     Figma-confirmado, é inferido, até o time de design corrigir a variável
-     na collection. */
-  --accent: #ffffff;
-  --accent-foreground: #002729;
+  /* --accent/--accent-foreground no dark mode definidos manualmente (não
+     vêm do tokens.json) — correção enviada diretamente pelo time, que
+     substitui o #ffffff confirmado no export de 2026-07-16 (que por sua
+     vez deixava accent-foreground ilegível sobre accent, ver histórico). */
+  --accent: #1f2937;
+  --accent-foreground: #ffffff;
 
   --destructive: #7f1d1d;
   --destructive-foreground: #fef2f2;

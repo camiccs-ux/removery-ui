@@ -69,13 +69,13 @@ export const ColorTable = ({ columns, rows }) => (
 
 # Colors
 
-Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations) — except one flagged value below, which is ⚠️ **inferred** pending a design fix. Light and dark values are both included below; toggle the Storybook theme switcher to preview. Re-synced 2026-07-16 — see notes below on what changed.
+Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations) — except dark-mode `accent`/`accent-foreground`, flagged below, which were corrected by direct design direction rather than the (broken) export value. Light and dark values are both included below; toggle the Storybook theme switcher to preview. Re-synced 2026-07-16 — see notes below on what changed.
 
 <div style={noteStyle}>
   <strong>Three things worth a design-team look</strong> (documented, not silently changed):
   <br />1. <code style={codeStyle}>destructive</code> is now a solid red-on-near-white pairing in **both** themes (#b91c1c/#ffffff light, #7f1d1d/#fef2f2 dark) — the previous soft pale-red-on-dark-red treatment in light mode is gone as of this sync; same token, now consistent visual weight across themes.
   <br />2. <code style={codeStyle}>primary-foreground</code> on <code style={codeStyle}>primary</code> is 3.31:1 in both themes — clears the 3:1 threshold for large text/UI components, but falls short of the 4.5:1 AA requirement for normal-size text.
-  <br />3. ⚠️ <strong>Not fully Figma-confirmed:</strong> the 2026-07-16 export sets dark-mode <code style={codeStyle}>accent</code> to <code style={codeStyle}>#ffffff</code> and dark-mode <code style={codeStyle}>accent-foreground</code> to <code style={codeStyle}>#ffffff</code> as well — identical values, 0:1 contrast, almost certainly an export error rather than an intentional design change. <code style={codeStyle}>accent</code> (<code style={codeStyle}>#ffffff</code>) is applied as confirmed; <code style={codeStyle}>accent-foreground</code> in dark mode is a placeholder (<code style={codeStyle}>#002729</code>, reused from the light-mode value) until design corrects the Figma variable.
+  <br />3. <code style={codeStyle}>accent</code> / <code style={codeStyle}>accent-foreground</code> in dark mode are **not** sourced from `tokens.json` — the 2026-07-16 export set both to <code style={codeStyle}>#ffffff</code> (0:1 contrast, an export error), so these were manually corrected to <code style={codeStyle}>#1f2937</code> / <code style={codeStyle}>#ffffff</code> per direct design direction, superseding both the broken export value and the earlier inferred placeholder.
 </div>
 
 ## Base
@@ -94,8 +94,8 @@ Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names 
     { token: 'secondary-foreground', varName: '--secondary-foreground', hex: '#ffffff / #1f2937', usage: 'Text on secondary (14.68:1 light, 13.34:1 dark — AAA)' },
     { token: 'muted', varName: '--muted', hex: '#f3f4f6 / #374151', usage: 'Neutral surfaces, table backgrounds' },
     { token: 'muted-foreground', varName: '--muted-foreground', hex: '#6b7280 / #f3f4f6', usage: 'Secondary text (4.39:1 light, 9.37:1 dark — AA/AAA)' },
-    { token: 'accent', varName: '--accent', hex: '#e1f0f1 / #ffffff', usage: 'Highlights, hover states (light is a pale teal tint; dark is ✅ Figma-confirmed as of 2026-07-16, no longer the dark teal it used to be)' },
-    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002729 / #002729 ⚠️ inferred', usage: 'Text on accent (13.56:1 light, 15.88:1 dark — AAA both). Dark value is NOT Figma-confirmed: tokens.json lists dark accent-foreground as #ffffff, identical to the new #ffffff accent background (0:1 contrast) — almost certainly an export error. Placeholder reuses the light-mode value until design fixes the variable.' },
+    { token: 'accent', varName: '--accent', hex: '#e1f0f1 / #1f2937', usage: 'Highlights, hover states. Light is ✅ Figma-confirmed pale teal tint. Dark is a design-direction override (#1f2937) — tokens.json currently exports #ffffff here, which paired with its own accent-foreground value produced 0:1 contrast (see note above).' },
+    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002729 / #ffffff', usage: 'Text on accent (13.56:1 light — AAA, ✅ Figma-confirmed; 14.68:1 dark — AAA, design-direction override, not from tokens.json)' },
     { token: 'destructive', varName: '--destructive', hex: '#b91c1c / #7f1d1d', usage: 'Destructive actions, errors — solid red in both themes as of this sync, see note above' },
     { token: 'destructive-foreground', varName: '--destructive-foreground', hex: '#ffffff / #fef2f2', usage: 'Text on destructive (6.47:1 light, 9.16:1 dark — AA/AAA)' },
     { token: 'border / input', varName: '--border', hex: '#eae7dc / #374151', usage: 'Borders, dividers, input outlines' },
@@ -171,7 +171,7 @@ New pair confirmed in Figma's "extra colors" group — not present in the previo
 
 ## About hover
 
-There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). `accent` is a pale teal tint in light mode (`#e1f0f1`) — it no longer matches `primary` (`#009da3`). As of the 2026-07-16 sync, dark mode `accent` changed to `#ffffff` (previously a dark teal, `#002729`) — see the ⚠️ note on `accent-foreground` above, since the tokens.json export currently makes this pairing unreadable as shipped.
+There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). `accent` is a pale teal tint in light mode (`#e1f0f1`) — it no longer matches `primary` (`#009da3`). In dark mode `accent` is now `#1f2937` (a slate/neutral surface, per design direction) with white foreground — see the note above on why this diverges from the current `tokens.json` export.
 
 ## Not synced
 
