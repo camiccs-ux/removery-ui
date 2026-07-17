@@ -30,10 +30,10 @@ const badgeVariants = cva(
           "border-transparent bg-status-pending-bg text-status-pending",
         "status-confirmed":
           "border-transparent bg-status-confirmed-bg text-status-confirmed",
-        "status-checked-in":
-          "border-transparent bg-status-checked-in-bg text-status-checked-in",
-        "status-in-service":
-          "border-transparent bg-status-in-service-bg text-status-in-service",
+        "status-checkedin":
+          "border-transparent bg-status-checkedin-bg text-status-checkedin",
+        "status-inservice":
+          "border-transparent bg-status-inservice-bg text-status-inservice",
         "status-noshow":
           "border-transparent bg-status-noshow-bg text-status-noshow",
         "status-blocked":

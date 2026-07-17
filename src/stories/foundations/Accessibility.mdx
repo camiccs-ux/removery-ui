@@ -38,24 +38,33 @@ All text/background pairings must meet minimum contrast ratios:
 
 ## Verified Pairings
 
-Ratios below are calculated from the actual hex values currently in `src/index.css` — which, as noted in Foundations → Colors, are still visual approximations pending sync with the published Figma variables. Recalculate once the real values are confirmed.
+Ratios below are ✅ **Figma-confirmed** — calculated from the real hex values in `src/index.css`, synced from `tokens.json` (the `variables2json` export of the Removery Library's `🌗 Theme Mode` collection) — except dark-mode accent, flagged below, which is a design-direction override rather than the current tokens.json export. Re-synced 2026-07-16. Light and dark are listed separately since several pairings differ meaningfully between themes.
 
 <SimpleTable
-  columns={['Pairing', 'Ratio', 'Status']}
+  columns={['Pairing', 'Light', 'Dark', 'Status']}
   rows={[
-    ['Foreground on Background', '18.32:1', 'AAA'],
-    ['Primary Foreground on Primary', '5.64:1', 'AA'],
-    ['Accent Foreground on Accent', '13.19:1', 'AAA'],
-    ['White on Destructive', '4.78:1', 'AA'],
-    ['Muted Foreground on Muted', '5.34:1', 'AA'],
-    ['Muted Foreground on Background', '5.82:1', 'AA'],
-    ['Ring on Background', '5.63:1', 'AA'],
-    ['status-confirmed on status-confirmed-bg', '3.09:1', 'AA (large text only)'],
-    ['status-pending on status-pending-bg', '3.24:1', 'AA (large text only)'],
+    ['Foreground on Background', '19.21:1', '16.47:1', 'AAA both'],
+    ['Card Foreground on Card', '19.21:1', '16.47:1', 'AAA both'],
+    ['Primary Foreground on Primary', '3.31:1', '3.31:1', 'AA large text/UI only — fails normal-text AA (4.5:1)'],
+    ['Secondary Foreground on Secondary', '14.68:1', '13.34:1', 'AAA both'],
+    ['Muted Foreground on Muted', '4.39:1', '9.37:1', 'AA / AAA'],
+    ['Muted Foreground on Background', '4.83:1', '16.22:1', 'AA / AAA'],
+    ['Accent Foreground on Accent', '13.56:1', '14.68:1 (design override)', 'AAA both — dark value (#1f2937/#ffffff) is a design-direction override, not from tokens.json, see Colors page'],
+    ['Destructive Foreground on Destructive', '6.47:1', '9.16:1', 'AA / AAA'],
+    ['Sidebar Foreground on Sidebar', '17.74:1', '17.85:1', 'AAA both'],
+    ['Sidebar Primary Foreground on Sidebar Primary', '3.31:1', '6.03:1', 'AA large / AA'],
+    ['Sidebar Accent Foreground on Sidebar Accent', '16.98:1', '16.09:1', 'AAA both'],
+    ['status-confirmed on status-confirmed-bg', '3.15:1', '7.55:1', 'AA large only (light) / AAA (dark)'],
+    ['status-new on status-new-bg', '5.87:1', '7.38:1', 'AA / AAA'],
+    ['status-pending on status-pending-bg', '5.15:1', '5.81:1', 'AA both'],
+    ['status-checkedin on status-checkedin-bg', '4.58:1', '9.52:1', 'AA / AAA'],
+    ['status-inservice on status-inservice-bg', '4.56:1', '5.68:1', 'AA both'],
+    ['status-noshow on status-noshow-bg', '6.06:1', '8.19:1', 'AA / AAA'],
+    ['status-blocked on status-blocked-bg', '6.92:1', '9.85:1', 'AA / AAA'],
   ]}
 />
 
-The `status-confirmed` and `status-pending` pairings only clear AA at large-text/UI-component thresholds (3:1), not normal text (4.5:1) — that's why `Badge` renders status labels at a minimum font size. Four other status tokens (`status-new`, `status-checked-in`, `status-noshow`, `status-blocked`) currently fail even the 3:1 threshold — see Foundations → Colors for the full breakdown and the fix that's pending.
+As of the 2026-07-15 re-sync, status token contrast improved dramatically across the board — every pairing now clears the 3:1 UI-component threshold in both themes, and all but one clear the stricter 4.5:1 AA normal-text threshold too. The one holdout: `status-confirmed` in light mode sits at 3.15:1, which is fine for large text/UI components but not for normal-size text — worth a follow-up with design if that token is ever used for small body text.
 
 ## Keyboard Navigation
 
@@ -69,7 +78,7 @@ All interactive components support full keyboard navigation, via Radix's built-i
 
 ## Focus Management
 
-- Focusable elements show a visible focus ring using `--ring` (5.63:1 against background — clears the 3:1 UI-component threshold)
+- Focusable elements show a visible focus ring using `--ring` (same value as `--primary`, `#009da3` — 3.31:1 against background in both themes, clearing the 3:1 UI-component threshold)
 - Focus rings use Tailwind's `focus-visible:ring-2` / `ring-[3px]` utilities, consistent across components
 - Focus is trapped inside Dialog, Sheet, Drawer, and AlertDialog-style overlays (Radix `Dialog.Root` / `vaul`'s drawer both handle this)
 - Focus returns to the trigger element when an overlay closes (Radix default behavior — not something this project overrides)
@@ -117,7 +126,7 @@ The system respects `prefers-reduced-motion`, added globally in `src/index.css`:
 
 Before shipping any new component or page:
 
-- Verify color contrast with a tool (e.g., axe DevTools, Lighthouse) — don't trust the placeholder hex values in `index.css` until they're synced with Figma
+- Verify color contrast with a tool (e.g., axe DevTools, Lighthouse) — status badges now clear 3:1 in both themes as of the 2026-07-15 sync, but `status-confirmed` in light mode still falls short of normal-text AA (see table above)
 - Navigate the entire flow using only a keyboard
 - Test with a screen reader (VoiceOver, NVDA)
 - Confirm `prefers-reduced-motion` is respected

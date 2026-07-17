@@ -12,7 +12,7 @@ const meta = {
       options: [
         'default', 'secondary', 'destructive', 'outline',
         'status-new', 'status-pending', 'status-confirmed',
-        'status-checked-in', 'status-in-service', 'status-noshow', 'status-blocked',
+        'status-checkedin', 'status-inservice', 'status-noshow', 'status-blocked',
         'pkg', 'guaranteed', 'online', 'alert', 'balance',
       ],
     },
@@ -37,8 +37,8 @@ export const AllStatuses: Story = {
       <Badge variant="status-new">New</Badge>
       <Badge variant="status-pending">Pending</Badge>
       <Badge variant="status-confirmed">Confirmed</Badge>
-      <Badge variant="status-checked-in">Checked-in</Badge>
-      <Badge variant="status-in-service">In service</Badge>
+      <Badge variant="status-checkedin">Checked-in</Badge>
+      <Badge variant="status-inservice">In service</Badge>
       <Badge variant="status-noshow">No-show</Badge>
       <Badge variant="status-blocked">Blocked</Badge>
     </div>

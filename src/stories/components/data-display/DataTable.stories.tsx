@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>
 const appointments = [
   { client: 'Jordan Reyes', studio: 'Austin - Anderson Mill', time: '9:00 AM', status: 'status-confirmed' },
   { client: 'Priya Shah', studio: 'Austin - South Congress', time: '10:30 AM', status: 'status-pending' },
-  { client: 'Marcus Webb', studio: 'Round Rock', time: '1:00 PM', status: 'status-checked-in' },
+  { client: 'Marcus Webb', studio: 'Round Rock', time: '1:00 PM', status: 'status-checkedin' },
   { client: 'Alina Torres', studio: 'Austin - Anderson Mill', time: '2:30 PM', status: 'status-noshow' },
 ]
 

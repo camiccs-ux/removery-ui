@@ -28,6 +28,7 @@ export const codeStyle = {
   borderRadius: 4,
   padding: '1px 6px',
 }
+export const noteStyle = { borderLeft: '3px solid var(--primary)', background: 'var(--muted)', padding: '12px 16px', borderRadius: 4, fontSize: 14, marginBottom: 24 }
 
 export const Swatch = ({ hex, varName }) => (
   <div
@@ -66,80 +67,152 @@ export const ColorTable = ({ columns, rows }) => (
   </table>
 )
 
+export const StatusColorTable = ({ rows }) => (
+  <table style={tableStyle}>
+    <thead>
+      <tr>
+        <th style={thStyle}>Token</th>
+        <th style={thStyle}>Light Mode</th>
+        <th style={thStyle}>Dark Mode</th>
+        <th style={thStyle}>Hex (Light / Dark)</th>
+        <th style={thStyle}>Contrast (Light / Dark)</th>
+        <th style={thStyle}>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r, i) => (
+        <tr key={i}>
+          <td style={tdStyle}>{r.token}</td>
+          <td style={tdStyle}>
+            <Swatch hex={r.light} />
+          </td>
+          <td style={tdStyle}>
+            <Swatch hex={r.dark} />
+          </td>
+          <td style={{ ...tdStyle, fontFamily: 'monospace' }}>{r.light} / {r.dark}</td>
+          <td style={tdStyle}>{r.contrast || '—'}</td>
+          <td style={tdStyle}>{r.usage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+
 # Colors
 
-Tokens from the `🌗 Theme Mode` collection in the Removery Library. The **names** match Figma exactly; the **hex values** below are visual approximations (documented at the top of `index.css`) pending official sync with the published collection. Contrast checks marked as failing below are an artifact of that approximation — recalculate once values are synced.
+Tokens from the **"🌗 Theme Mode"** collection in the Removery Library. Names and hex values below are ✅ **Figma-confirmed** — sourced directly from `tokens.json`, the real export of that collection via the `variables2json` plugin (no more visual approximations) — except dark-mode `accent`/`accent-foreground`, flagged below, which were corrected by direct design direction rather than the (broken) export value. Light and dark values are both included below; toggle the Storybook theme switcher to preview. Re-synced 2026-07-16 — see notes below on what changed.
+
+<div style={noteStyle}>
+  <strong>Three things worth a design-team look</strong> (documented, not silently changed):
+  <br />1. <code style={codeStyle}>destructive</code> is now a solid red-on-near-white pairing in **both** themes (#b91c1c/#ffffff light, #7f1d1d/#fef2f2 dark) — the previous soft pale-red-on-dark-red treatment in light mode is gone as of this sync; same token, now consistent visual weight across themes.
+  <br />2. <code style={codeStyle}>primary-foreground</code> on <code style={codeStyle}>primary</code> is 3.31:1 in both themes — clears the 3:1 threshold for large text/UI components, but falls short of the 4.5:1 AA requirement for normal-size text.
+  <br />3. <code style={codeStyle}>accent</code> / <code style={codeStyle}>accent-foreground</code> in dark mode are **not** sourced from `tokens.json` — the 2026-07-16 export set both to <code style={codeStyle}>#ffffff</code> (0:1 contrast, an export error), so these were manually corrected to <code style={codeStyle}>#1f2937</code> / <code style={codeStyle}>#ffffff</code> per direct design direction, superseding both the broken export value and the earlier inferred placeholder.
+</div>
 
 ## Base
 
 <ColorTable
-  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  columns={['Token', 'Swatch', 'Hex (Light / Dark)', 'Usage']}
   rows={[
-    { token: 'background', varName: '--background', hex: '#fdfcf8', usage: 'Page background' },
-    { token: 'foreground', varName: '--foreground', hex: '#0e1216', usage: 'Primary text (18.32:1 vs background — AAA)' },
-    { token: 'card', varName: '--card', hex: '#ffffff', usage: 'Card backgrounds and elevated surfaces' },
-    { token: 'card-foreground', varName: '--card-foreground', hex: '#0e1216', usage: 'Text on card' },
-    { token: 'popover', varName: '--popover', hex: '#ffffff', usage: 'Popover, dropdown, tooltip backgrounds' },
-    { token: 'primary', varName: '--primary', hex: '#157171', usage: 'Primary actions, links, focus (5.63:1 vs background — AA)' },
-    { token: 'primary-foreground', varName: '--primary-foreground', hex: '#fcfcfc', usage: 'Text on primary (5.64:1 — AA)' },
-    { token: 'secondary', varName: '--secondary', hex: '#ebf4f4', usage: 'Secondary surface' },
-    { token: 'secondary-foreground', varName: '--secondary-foreground', hex: '#162525', usage: 'Text on secondary (14.17:1 — AAA)' },
-    { token: 'muted', varName: '--muted', hex: '#f3f2ee', usage: 'Neutral surfaces, table backgrounds' },
-    { token: 'muted-foreground', varName: '--muted-foreground', hex: '#5f6469', usage: 'Secondary text (5.82:1 vs background — AA)' },
-    { token: 'accent', varName: '--accent', hex: '#d5f2f1', usage: 'Light highlights — also reused for hover (see note below)' },
-    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002929', usage: 'Text on accent (13.19:1 — AAA)' },
-    { token: 'destructive', varName: '--destructive', hex: '#df2225', usage: 'Destructive actions, errors (4.66:1 vs background — AA)' },
-    { token: 'border / input', varName: '--border', hex: '#dfdeda', usage: 'Borders, dividers, input outlines' },
-    { token: 'ring', varName: '--ring', hex: '#157171', usage: 'Focus ring (same value as primary)' },
+    { token: 'background', varName: '--background', hex: '#ffffff / #2e1d11', usage: 'Page background' },
+    { token: 'foreground', varName: '--foreground', hex: '#180c04 / #f9f5f2', usage: 'Primary text (19.21:1 light, 14.90:1 dark — AAA)' },
+    { token: 'card', varName: '--card', hex: '#ffffff / #180c04', usage: 'Card backgrounds and elevated surfaces (same as background in light; darker than background in dark)' },
+    { token: 'card-foreground', varName: '--card-foreground', hex: '#180c04 / #f9f5f2', usage: 'Text on card' },
+    { token: 'popover', varName: '--popover', hex: '#ffffff / #180c04', usage: 'Popover, dropdown, tooltip backgrounds' },
+    { token: 'primary', varName: '--primary', hex: '#009da3 / #009da3', usage: 'Primary actions, links, focus (3.31:1 vs background — same value both themes)' },
+    { token: 'primary-foreground', varName: '--primary-foreground', hex: '#ffffff / #ffffff', usage: 'Text on primary (3.31:1 — AA large text/UI only, see note above)' },
+    { token: 'secondary', varName: '--secondary', hex: '#1f2937 / #f3f4f6', usage: 'Secondary surface (inverts between themes)' },
+    { token: 'secondary-foreground', varName: '--secondary-foreground', hex: '#ffffff / #1f2937', usage: 'Text on secondary (14.68:1 light, 13.34:1 dark — AAA)' },
+    { token: 'muted', varName: '--muted', hex: '#f3f4f6 / #374151', usage: 'Neutral surfaces, table backgrounds' },
+    { token: 'muted-foreground', varName: '--muted-foreground', hex: '#6b7280 / #f3f4f6', usage: 'Secondary text (4.39:1 light, 9.37:1 dark — AA/AAA)' },
+    { token: 'accent', varName: '--accent', hex: '#e1f0f1 / #1f2937', usage: 'Highlights, hover states. Light is ✅ Figma-confirmed pale teal tint. Dark is a design-direction override (#1f2937) — tokens.json currently exports #ffffff here, which paired with its own accent-foreground value produced 0:1 contrast (see note above).' },
+    { token: 'accent-foreground', varName: '--accent-foreground', hex: '#002729 / #ffffff', usage: 'Text on accent (13.56:1 light — AAA, ✅ Figma-confirmed; 14.68:1 dark — AAA, design-direction override, not from tokens.json)' },
+    { token: 'destructive', varName: '--destructive', hex: '#b91c1c / #7f1d1d', usage: 'Destructive actions, errors — solid red in both themes as of this sync, see note above' },
+    { token: 'destructive-foreground', varName: '--destructive-foreground', hex: '#ffffff / #fef2f2', usage: 'Text on destructive (6.47:1 light, 9.16:1 dark — AA/AAA)' },
+    { token: 'border / input', varName: '--border', hex: '#eae7dc / #374151', usage: 'Borders, dividers, input outlines' },
+    { token: 'ring', varName: '--ring', hex: '#009da3 / #009da3', usage: 'Focus ring (same value as primary)' },
   ]}
 />
 
 ## Sidebar
 
 <ColorTable
-  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  columns={['Token', 'Swatch', 'Hex (Light / Dark)', 'Usage']}
   rows={[
-    { token: 'sidebar', varName: '--sidebar', hex: '#010c0c', usage: 'Sidebar background (always dark, regardless of theme)' },
-    { token: 'sidebar-foreground', varName: '--sidebar-foreground', hex: '#eeeeee', usage: 'Text on sidebar' },
-    { token: 'sidebar-primary', varName: '--sidebar-primary', hex: '#157171', usage: 'Active item / emphasis within the sidebar' },
-    { token: 'sidebar-accent', varName: '--sidebar-accent', hex: '#071f1f', usage: 'Hover / selected state on menu items' },
-    { token: 'sidebar-border', varName: '--sidebar-border', hex: '#0f1e1d', usage: 'Internal sidebar dividers' },
-    { token: 'sidebar-ring', varName: '--sidebar-ring', hex: '#157171', usage: 'Focus ring inside the sidebar' },
+    { token: 'sidebar', varName: '--sidebar', hex: '#ffffff / #0f172a', usage: 'Sidebar background — light mode keeps it white, unlike the previous placeholder which assumed always-dark' },
+    { token: 'sidebar-foreground', varName: '--sidebar-foreground', hex: '#111827 / #ffffff', usage: 'Text on sidebar (17.74:1 light, 17.85:1 dark — AAA both)' },
+    { token: 'sidebar-primary', varName: '--sidebar-primary', hex: '#009da3 / #006e74', usage: 'Active item / emphasis within the sidebar' },
+    { token: 'sidebar-primary-foreground', varName: '--sidebar-primary-foreground', hex: '#ffffff / #ffffff', usage: 'Text on sidebar-primary (3.31:1 light, 6.03:1 dark)' },
+    { token: 'sidebar-accent', varName: '--sidebar-accent', hex: '#111827 / #192132', usage: 'Hover / selected state on menu items' },
+    { token: 'sidebar-accent-foreground', varName: '--sidebar-accent-foreground', hex: '#f9fafb / #ffffff', usage: 'Text on sidebar-accent (16.98:1 light, 16.09:1 dark — AAA)' },
+    { token: 'sidebar-border', varName: '--sidebar-border', hex: '#eae7dc / #ffffff', usage: 'Internal sidebar dividers — dark mode uses a pure white border on a dark sidebar, a notably high-contrast choice worth confirming with design' },
+    { token: 'sidebar-ring', varName: '--sidebar-ring', hex: '#009da3 / #009da3', usage: 'Focus ring inside the sidebar' },
   ]}
 />
 
 ## Status (Scheduling / R7)
 
-Semantic tokens for appointment status, created during the design system audit (see audit report, sections 5–7) — each one represents an R7 state, not an arbitrary color. The contrast column compares the text color (`status-*`) against its own background (`status-*-bg`), as used in the `Badge` component.
+Semantic tokens for appointment status, from the same `🌗 Theme Mode` collection. **Renamed from the original codebase**: Figma's real variable names are `status-checkedin` / `status-inservice` (no hyphen) — the previous code used `status-checked-in` / `status-in-service`, likely a misread during the original audit. Renamed throughout `index.css`, `badge.tsx`, and stories to match Figma exactly. The contrast column compares the text color (`status-*`) against its own background (`status-*-bg`), as used in the `Badge` component.
 
-<ColorTable
-  columns={['Token', 'Swatch', 'Hex (text)', 'Contrast vs bg', 'Usage']}
+<StatusColorTable
   rows={[
-    { token: 'status-new', varName: '--status-new', hex: '#d97e38', contrast: '2.40:1 ⚠️ below AA', usage: 'Newly created appointment' },
-    { token: 'status-pending', varName: '--status-pending', hex: '#d64651', contrast: '3.24:1 (AA large text)', usage: 'Awaiting confirmation' },
-    { token: 'status-confirmed', varName: '--status-confirmed', hex: '#4d9351', contrast: '3.09:1 (AA large text)', usage: 'Confirmed by client' },
-    { token: 'status-checked-in', varName: '--status-checked-in', hex: '#d4a73e', contrast: '1.87:1 ⚠️ below AA', usage: 'Client checked in at studio' },
-    { token: 'status-in-service', varName: '--status-in-service', hex: '#7f75b8', contrast: '3.30:1 (AA large text)', usage: 'Session in progress' },
-    { token: 'status-noshow', varName: '--status-noshow', hex: '#8b9095', contrast: '2.62:1 ⚠️ below AA', usage: 'Client did not show up' },
-    { token: 'status-blocked', varName: '--status-blocked', hex: '#acaeb1', contrast: '2.17:1 vs background ⚠️ below AA', usage: 'Blocked time slot (dashed border, no filled background)' },
+    { token: 'status-new', light: '#a03600', dark: '#f98140', contrast: '5.87:1 (AA) / 7.38:1 (AAA)', usage: 'Newly created appointment — text color' },
+    { token: 'status-new-bg', light: '#fce8df', dark: '#2e0000', usage: 'Newly created appointment — badge background' },
+    { token: 'status-pending', light: '#be123c', dark: '#fb7185', contrast: '5.15:1 (AA) / 5.81:1 (AA)', usage: 'Awaiting confirmation — text color' },
+    { token: 'status-pending-bg', light: '#fee2e2', dark: '#4c0519', usage: 'Awaiting confirmation — badge background' },
+    { token: 'status-confirmed', light: '#16a34a', dark: '#84cc16', contrast: '3.15:1 (AA large only) / 7.55:1 (AAA)', usage: 'Confirmed by client — text color' },
+    { token: 'status-confirmed-bg', light: '#f0fdf4', dark: '#052e16', usage: 'Confirmed by client — badge background' },
+    { token: 'status-checkedin', light: '#a16207', dark: '#facc15', contrast: '4.58:1 (AA) / 9.52:1 (AAA)', usage: 'Client checked in at studio — text color' },
+    { token: 'status-checkedin-bg', light: '#fef9c3', dark: '#422006', usage: 'Client checked in at studio — badge background' },
+    { token: 'status-inservice', light: '#9333ea', dark: '#c084fc', contrast: '4.56:1 (AA) / 5.68:1 (AA)', usage: 'Session in progress — text color' },
+    { token: 'status-inservice-bg', light: '#f3e8ff', dark: '#3b0764', usage: 'Session in progress — badge background' },
+    { token: 'status-noshow', light: '#5f524d', dark: '#eae7dc', contrast: '6.06:1 (AA) / 8.19:1 (AAA)', usage: 'Client did not show up — text color' },
+    { token: 'status-noshow-bg', light: '#eae7dc', dark: '#4b3f3a', usage: 'Client did not show up — badge background' },
+    { token: 'status-blocked', light: '#475569', dark: '#cbd5e1', contrast: '6.92:1 (AA) / 9.85:1 (AAA)', usage: 'Blocked time slot — text color' },
+    { token: 'status-blocked-bg', light: '#f1f5f9', dark: '#1e293b', usage: 'Blocked time slot — badge background' },
   ]}
 />
 
-Items flagged with ⚠️ fall below 3:1 with the current placeholder values and will need a luminosity adjustment once the real values from the `🌗 Theme Mode` collection are confirmed in Figma — this is tracked in the audit's action plan as a pending Badge token item (PKG, GUAR, ONLINE, ALERT, $), and now extends to the status colors as well.
+<div style={noteStyle}>
+  As of this sync, status contrast improved dramatically — every pairing now clears the 3:1 large-text/UI threshold in both themes, and all but one clear the stricter 4.5:1 AA normal-text threshold. The one exception: <code style={codeStyle}>status-confirmed</code> in light mode sits at 3.15:1 — passes for large text/UI components, but not for normal-size text. See Foundations → Accessibility for the full table.
+</div>
+
+## Success
+
+New pair confirmed in Figma's "extra colors" group — not present in the previous placeholder set:
+
+<ColorTable
+  columns={['Token', 'Swatch', 'Hex (Light / Dark)', 'Usage']}
+  rows={[
+    { token: 'success-bg', varName: '--success-bg', hex: '#f0fdf4 / #15803d', usage: 'Success surface background' },
+    { token: 'success-foreground', varName: '--success-foreground', hex: '#166534 / #f0fdf4', usage: 'Text on success-bg (6.81:1 light — AA; dark not yet computed, values invert)' },
+  ]}
+/>
 
 ## Charts
 
+<div style={noteStyle}>
+  These were not part of the color export's confirmed keys used elsewhere — <code style={codeStyle}>chart-1</code> through <code style={codeStyle}>chart-5</code> below are the real Figma values from <code style={codeStyle}>tokens.json</code>, replacing the previous placeholder approximations.
+</div>
+
 <ColorTable
-  columns={['Token', 'Swatch', 'Hex', 'Usage']}
+  columns={['Token', 'Swatch', 'Hex (Light / Dark)', 'Usage']}
   rows={[
-    { token: 'chart-1', varName: '--chart-1', hex: '#009a9c', usage: 'Chart series 1' },
-    { token: 'chart-2', varName: '--chart-2', hex: '#d96a42', usage: 'Chart series 2' },
-    { token: 'chart-3', varName: '--chart-3', hex: '#8f68cb', usage: 'Chart series 3' },
-    { token: 'chart-4', varName: '--chart-4', hex: '#68b457', usage: 'Chart series 4' },
-    { token: 'chart-5', varName: '--chart-5', hex: '#e85760', usage: 'Chart series 5' },
+    { token: 'chart-1', varName: '--chart-1', hex: '#ef4444 / #2563eb', usage: 'Chart series 1' },
+    { token: 'chart-2', varName: '--chart-2', hex: '#006e74 / #4ade80', usage: 'Chart series 2' },
+    { token: 'chart-3', varName: '--chart-3', hex: '#1e3a8a / #f59e0b', usage: 'Chart series 3' },
+    { token: 'chart-4', varName: '--chart-4', hex: '#fbbf24 / #8b5cf6', usage: 'Chart series 4' },
+    { token: 'chart-5', varName: '--chart-5', hex: '#d97706 / #e11d48', usage: 'Chart series 5' },
   ]}
 />
 
 ## About hover
 
-There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). The real open item (see the audit's action plan) is confirming that the `accent` value here matches the hover color used in R7 production today.
+There's no separate `--hover` variable — the Tailwind/shadcn convention reuses <code style={codeStyle}>accent</code> for hover states (`hover:bg-accent`). `accent` is a pale teal tint in light mode (`#e1f0f1`) — it no longer matches `primary` (`#009da3`). In dark mode `accent` is now `#1f2937` (a slate/neutral surface, per design direction) with white foreground — see the note above on why this diverges from the current `tokens.json` export.
+
+## Not synced
+
+Two things from `tokens.json` intentionally **not** brought into this file:
+
+- **`🖼️ Theme` collection** (default/amber brand variants) — per earlier direction, this collection isn't published/active and shouldn't be used.
+- **"opacity colors"** group inside `🌗 Theme Mode` — as of this sync, entries like `primary-10`/`primary-30`/`primary-80` now correlate with the real `primary` (`#009da3`), but the export still has no actual alpha channel (every step is the same flat hex, e.g. `background-10`/`background-20`/`background-30`/`background-40` are all `#ffffff` in light mode) — so there's no real opacity scale to sync yet, just same-color duplicates under different names. Flagged here rather than synced silently; let me know if design intends these to carry actual alpha values.

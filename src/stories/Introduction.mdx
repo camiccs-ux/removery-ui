@@ -12,7 +12,7 @@ Welcome to Removery UI — a React component library and design token catalog th
 
 Design decisions that underpin every component:
 
-- **Colors** — brand palette from the `🌗 Theme Mode` collection, including the R7 scheduling status tokens (`status-new`, `status-pending`, `status-confirmed`, `status-checked-in`, `status-in-service`, `status-noshow`, `status-blocked`)
+- **Colors** — brand palette from the `🌗 Theme Mode` collection, including the R7 scheduling status tokens (`status-new`, `status-pending`, `status-confirmed`, `status-checkedin`, `status-inservice`, `status-noshow`, `status-blocked`)
 - **Typography** — font families (Archivo + ABC Social Extended), confirmed sizes/weights/line-heights read directly from Figma
 - **Dark Mode** — CSS variable system and how to activate it
 - **Accessibility** — WCAG 2.1 AA contrast targets, keyboard nav, ARIA patterns, and a testing checklist
@@ -125,4 +125,4 @@ import { Button } from '@/components/ui/button'
 <Button variant="pill">Book Free Consultation</Button>
 ```
 
-For color and typography values, see **Foundations → Colors** and **Foundations → Typography**. Color hex values are currently visual approximations pending sync with the published Figma variables — see the note at the top of `src/index.css`.
+For color and typography values, see **Foundations → Colors** and **Foundations → Typography**. Color, typography, and spacing values are now ✅ Figma-confirmed, synced from `tokens.json` (the `variables2json` export of the Removery Library) — see the note at the top of `src/index.css`.
